@@ -1,0 +1,26 @@
+@import "./main";
+@import "./variables";
+@import "./summonerSearchInput";
+
+
+html {
+  height: 100%;
+}
+
+body {
+  // font-family: -apple-system, BlinkMacSystemFont;
+  font-family: "Helvetica Neue",Helvetica,"Apple SD Gothic Neo",AppleGothic,Dotum,Arial,Tahoma;
+  margin: 0;
+  display: block;
+  background-color: $bgGray;
+}
+
+.root {
+  --HSDSGlobalFontFamily: "Aktiv Grotesk", "Segoe UI", Helvetica, Arial,
+    sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  --HSDSGlobalFontFamilyMono: "SFMono-Regular", Consolas, "Liberation Mono",
+    Menlo, Courier, monospace;
+  --HSDSGlobalFontSize: 13px;
+}
+
+

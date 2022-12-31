@@ -1,0 +1,157 @@
+.SummonerSearchInputWrapper {
+  position: relative;
+  height: 100%;
+  width: 100%;
+
+  .SummonerSearchInput {
+    display: grid;
+    grid-template-columns: 1fr 50px;
+    align-items: center;
+    margin-right: 1rem;
+    margin-bottom: 0.1rem;
+    border-radius: 0.3rem;
+    height: 100%;
+    width: 100%;
+
+    background-color: white;
+
+    input {
+      margin-left: 1.5rem;
+      border: none;
+      outline: none;
+    }
+  }
+
+  .SummonerAutoCompleteContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    background-color: white;
+    padding-top: 0.8rem;
+    padding-bottom: 0.8rem;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+
+    .SummonerAutoCompletes {
+      width: 100%;
+      .SummonerAutoComplete {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        width: 100%;
+        height: 50px;
+        gap: 0.8rem;
+        cursor: pointer;
+
+        &:hover {
+          background-color: $bgGray;
+        }
+
+        .Avatar {
+          display: block;
+          width: 30px;
+          height: 30px;
+          border-radius: 50%;
+          object-fit: fill;
+          margin-left: 0.8rem;
+        }
+
+        .SummonerInfoRight {
+          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+          font-size: 13px;
+          .AutoCompleteSummonerTier {
+            color: #9c9c9c;
+          }
+        }
+      }
+    }
+  }
+
+  .SummonerSearchSuggestsContainer {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    background-color: white;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    padding-bottom: 0.8rem;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+    
+    .TabContainer {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-evenly;
+      height: 40px;
+      width: 100%;
+      gap: 1px;
+      border-radius: 5px 5px 0px 0px;
+
+      .SearchTabItemBtn {
+        display: flex;
+        font-size: 12px;
+        height: 100%;
+        width: 100%;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        border-radius: 5px 5px 0px 0px;
+
+        &.selected {
+          background-color: white;
+          color: #4A4A4A;
+        }
+
+        &:not(.selected) {
+          background-color: #e3e3e3;
+          color: #9c9c9c;
+        }
+
+        &.disabled {
+          cursor: not-allowed !important;
+        }
+      }
+    }
+
+    .SummonerSearched {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-left: 1.5rem;
+      height: 2.2rem;
+      cursor: pointer;
+
+      &:hover {
+        background-color: $bgGray;
+      }
+
+      .SummonerName {
+        font-size: 12px;
+        color: #666666;
+        cursor: pointer;
+      }
+
+      .SummonerBtn {
+        font-size: 12px;
+        cursor: pointer;
+        padding-right: 1.5rem;
+        button{
+          background: inherit;
+          border:none;
+          padding:0;
+          margin:0
+        }
+        .active{
+          fill: #fbee97;
+        }
+      }
+
+      .DeleteHistoryBtn {
+        display: block;
+        height: 10px;
+        margin-right: 1rem;
+        cursor: pointer;
+      }
+    }
+  }
+}

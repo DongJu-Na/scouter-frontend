@@ -1,0 +1,21 @@
+.Main {
+  height: 100vh;
+  width: 100vw;
+  background-color: rgb(34 24 34);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+
+  .BannerImg {
+    margin-top: 10%;
+    display: block;
+    width: 400px;
+    object-fit: scale-down;
+  }
+
+  .MainSearchContainer {
+    width: 60%;
+    height: 3rem;
+  }
+}
