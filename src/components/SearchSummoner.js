@@ -33,7 +33,7 @@ function SearchSummoner(){
 
     const onSearch = (query,sType) => {
         let findIndex = list[sType].findIndex(data => data.name === query);
-        let copyArray = [... list[sType]];
+        let copyArray = [...list[sType]];
 
         if(copyArray.length === 5){
             copyArray.splice(copyArray.length - 1);
@@ -54,7 +54,7 @@ function SearchSummoner(){
     }
 
     const onFavorites = (rowData) => {
-        let copyArray = [... list["recent"]];
+        let copyArray = [...list["recent"]];
         let findIndex = copyArray.findIndex(data => data.name === rowData.name);
     
         if(findIndex !== -1 ){            
@@ -95,7 +95,7 @@ function SearchSummoner(){
         }));
 
         if(sType === "favorites"){
-            let rCopyArray = [... list["recent"]];
+            let rCopyArray = [...list["recent"]];
             let rFindIndex = rCopyArray.findIndex(subData => subData.name === rowData.name);
             if(rFindIndex !== -1 ){ 
                 rCopyArray[rFindIndex] = {...rCopyArray[rFindIndex] , "favoritesFlag" : false};

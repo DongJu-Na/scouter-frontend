@@ -8,7 +8,7 @@ function App() {
   return (
         <Routes>
             {/* <Route exact path="/summoner/userName=:userName" element={Summoner} /> */} 
-            <Route exact path="/" element={<Main/>} />
+            <Route exact path="/scouter-frontend/" element={<Main/>} />
         </Routes>
   );
 }
