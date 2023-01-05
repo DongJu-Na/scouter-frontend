@@ -7,10 +7,11 @@ import { BrowserRouter } from "react-router-dom";
 import { RecoilRoot } from 'recoil';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
 root.render(
   <>
     <RecoilRoot>
-      <BrowserRouter>
+      <BrowserRouter basename={process.env.NODE_ENV === "development"  ?  "/" : process.env.PUBLIC_URL }>
         <React.StrictMode>
           <App />
         </React.StrictMode>

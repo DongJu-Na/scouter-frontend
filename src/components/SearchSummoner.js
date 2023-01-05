@@ -8,12 +8,17 @@ import useOnClickOutside from "../util/useOnClickOutside";
 import { useRecoilState } from "recoil";
 import { summonerState } from "../atom/index";
 
+import { useNavigate } from "react-router-dom";
+
+import { httpApiGet , httpUrl } from "../util/apiClient";
+
 function SearchSummoner(){
     const wrapperRef = useRef(null);
     const [focus,setFocus] = useState(false);
     const [keyword,setKeyword] = useState('');
     const [tabKey, setTabKey] = useState("recent");
     const [list , setList] = useRecoilState(summonerState);
+    const navigate = useNavigate();
     
     useEffect(()=>{
 
@@ -45,12 +50,32 @@ function SearchSummoner(){
             return false;
         }
 
+
+
+        getSummoner(query);
+        
+        /*
         setList((prevVal)=>({
             ...prevVal,
             [sType] :  copyArray
         }));
+
+        navigate(`/summoner/userName=${query}`);
+        */
         
-        
+    }
+
+    const getSummoner = (query) => {
+        if(query === "") return false;
+
+        httpApiGet(httpUrl.getSummoner, [query], {},"lol")
+        .then((res) => {
+            console.log(res);
+        })
+        .catch((e) => { 
+          console.error();       
+        });
+
     }
 
     const onFavorites = (rowData) => {

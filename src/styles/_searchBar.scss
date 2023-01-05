@@ -1,0 +1,30 @@
+.SearchBar {
+  display: flex;
+  flex-direction: row;
+  font-family: "AppleSDGothicNeo";
+  background-color: $bannerBlack;
+  height: 97px;
+
+  .logoZone {
+    position: absolute;
+    top: -0.5rem;
+    left: 28%;
+    margin-left: -480px;
+
+    img {
+      display: block;
+      cursor: pointer;
+      height: 105px;
+      object-fit: fill;
+    }
+  }
+
+  .SearchInputContainer {
+    position: absolute;
+    right: 1rem;
+    top: 3rem;
+    width: 260px;
+    height: 32px;
+    margin-right: 1rem;
+  }
+}

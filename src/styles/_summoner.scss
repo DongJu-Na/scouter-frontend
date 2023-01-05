@@ -1,0 +1,834 @@
+.Summoner {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background-color: $bgGray;
+
+  main.SummonerBody {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+    margin-top: $defaultMargin;
+    gap: $defaultMargin;
+
+    .SideContent {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      min-width: 300px;
+      margin-left: $defaultMargin;
+      gap: $defaultMargin;
+
+      .RankGame {
+        border: 1px solid $borderGray;
+        border-radius: 3px;
+
+        display: flex;
+        height: 140px;
+        width: 100%;
+        background-color: #f2f2f2;
+
+        .RankIconWrapper {
+          flex: 4;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          object-fit: scale-down;
+
+          img.RankIcon {
+            height: 104px;
+            width: 104px;
+          }
+
+          img.UnRanked {
+            height: 54px;
+            width: 54px;
+          }
+        }
+
+        .RankInfo {
+          flex: 6;
+          display: flex;
+          flex-direction: column;
+          margin-top: 2rem;
+          margin-bottom: 1.5rem;
+          justify-content: space-evenly;
+          align-items: flex-start;
+          gap: 0.2rem;
+
+          div.GameType {
+            font-size: 11px;
+            color: #879292;
+          }
+
+          div.PreferredPosition {
+            font-weight: bold;
+            font-size: 12px;
+            color: #353a3a;
+          }
+
+          div.Tier {
+            font-family: Helvetica;
+            font-weight: bold;
+            font-size: 15px;
+            color: #1f8ecd;
+          }
+
+          div.Points {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            .LP {
+              font-size: 12px;
+              font-weight: bold;
+              color: #555e5e;
+            }
+
+            .WL {
+              font-size: 12px;
+              color: #879292;
+            }
+          }
+
+          div.LeagueName {
+            font-size: 12px;
+            color: #879292;
+          }
+        }
+      }
+
+      .ChampsWinRatioBox {
+        border: 1px solid $borderGray;
+        border-bottom: none;
+        width: 100%;
+
+        .LRContainer {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-evenly;
+          height: 40px;
+          width: 100%;
+          gap: 1px;
+          background-color: $borderGray;
+
+          .ChampsWinRateButton {
+            display: flex;
+            font-size: 12px;
+            height: 100%;
+            width: 100%;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+
+            &.Selected {
+              background-color: #ededed;
+            }
+
+            &:not(.Selected) {
+              background-color: #f2f2f2;
+              border-bottom: 1px solid $borderGray;
+            }
+          }
+        }
+
+        .ChampWinRatioItem {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          border-bottom: 1px solid $borderGray;
+          height: 53px;
+          gap: $defaultMargin;
+
+          img.ChampAvatar {
+            margin-left: $defaultMargin;
+            height: 40px;
+            width: 40px;
+            border-radius: 50%;
+          }
+
+          .ChampName {
+            color: #5e5e5e;
+            font-size: 12px;
+            width: 74px;
+          }
+
+          .WinRatio {
+            color: #5e5e5e;
+            font-size: 12px;
+            width: 40px;
+            text-align: center;
+          }
+
+          .WinLose {
+            margin-right: 5px;
+            display: flex;
+            flex-direction: row;
+            width: 85px;
+            align-items: flex-end;
+
+            .Win {
+              background-color: #1f8ecd;
+              color: white;
+              font-size: 12px;
+              padding: 4px 0px 4px 4px;
+              border-radius: 5px 0px 0px 5px;
+            }
+
+            .Loss {
+              background-color: #ee5a52;
+              color: white;
+              text-align: right;
+              font-size: 12px;
+              padding: 4px 4px 4px 0px;
+              border-radius: 0px 5px 5px 0px;
+            }
+          }
+
+          .TDContainer1 {
+            width: 64px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            .Top1 {
+              font-size: 13px;
+              font-weight: bold;
+              font-family: Helvetica;
+              color: #5e5e5e;
+            }
+            .Down1 {
+              font-family: Helvetica;
+              font-size: 11px;
+              color: #879292;
+            }
+          }
+
+          .TDContainer2 {
+            width: 70px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            .Top2 {
+              font-family: Helvetica;
+              font-size: 13px;
+              font-weight: bold;
+            }
+            .Down2 {
+              border: 1px solid $borderGray;
+              font-family: Helvetica;
+              font-size: 11px;
+              color: #879292;
+            }
+          }
+
+          .TDContainer3 {
+            width: 70px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            .Top3 {
+              font-family: Helvetica;
+              font-size: 13px;
+              font-weight: bold;
+            }
+            .Down3 {
+              overflow: hidden;
+              text-overflow: ellipsis;
+              display: -webkit-box;
+              -webkit-line-clamp: 1;
+              -webkit-box-orient: vertical;
+              font-family: Helvetica;
+              font-size: 11px;
+              color: #879292;
+            }
+          }
+        }
+      }
+    }
+
+    .RealContent {
+      display: flex;
+      flex-direction: column;
+      width: 700px;
+      margin-bottom: $defaultMargin;
+
+      .QueueTypes {
+        border: 1px solid $borderGray;
+        border-bottom: none;
+
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+        width: 100%;
+        gap: 1rem;
+        background-color: #f2f2f2;
+        position: sticky;
+        top: 0px;
+        z-index: 1;
+
+        .QueueType {
+          margin-left: $defaultMargin;
+          font-size: 12px;
+          color: #555555;
+
+          &.Selected {
+            color: $bannerBlack;
+            padding: 7px 0px;
+            border-bottom: 2px solid $bannerBlack;
+          }
+
+          cursor: pointer;
+        }
+      }
+
+      .Summary {
+        border: 1px solid $borderGray;
+        display: flex;
+        flex-direction: row;
+        min-width: 700px;
+        height: 160px;
+        margin-bottom: $defaultMargin;
+
+        .OveralWinRate {
+          display: flex;
+          flex-direction: row;
+          min-width: 250px;
+          border-right: 1px solid #cdd2d2;
+
+          .Left {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            width: 120px;
+            align-items: center;
+            gap: 0.2rem;
+
+            .CurrentTwentyGames {
+              font-family: Helvetica;
+              font-size: 12px;
+              color: #666666;
+              margin-top: $defaultMargin;
+            }
+
+            .ChartContainer {
+              width: 100px;
+              object-fit: scale-down;
+
+              .CurrentWinRatio {
+                display: flex;
+                position: relative;
+                align-items: center;
+                justify-content: center;
+                left: 17px;
+                top: -78px;
+                width: 66px;
+                height: 66px;
+                background-color: $bgGray;
+                border-radius: 50%;
+                color: #666666;
+                font-size: 13px;
+              }
+            }
+          }
+
+          .Right {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            gap: 0.8rem;
+
+            .AverageKDAs {
+              display: inline;
+              font-size: 11px;
+              font-family: Helvetica;
+              font-weight: bold;
+              color: #333333;
+
+              .AverageKill {
+                display: inline;
+                margin: 0px 4px;
+              }
+
+              .AverageDeath {
+                display: inline;
+                margin: 0px 4px;
+                color: #c6443e;
+              }
+
+              .AverageAssist {
+                display: inline;
+                margin: 0px 4px;
+              }
+            }
+
+            .Avg {
+              display: inline;
+              font-family: Helvetica;
+              font-size: 16px;
+
+              .KDARatio {
+                display: inline;
+                margin: 0px 4px;
+
+                font-weight: bold;
+              }
+
+              .WinRatio {
+                display: inline;
+
+                &.red {
+                  color: #c6443e;
+                }
+              }
+            }
+          }
+        }
+
+        .MostChampWinRatios {
+          display: flex;
+          min-width: 230px;
+          flex-direction: column;
+          justify-content: space-evenly;
+          border-right: 1px solid #cdd2d2;
+
+          .MostChampWinRatio {
+            display: flex;
+            flex-direction: row;
+            padding-left: 1rem;
+            height: 30px;
+            .ChampAvatar {
+              display: block;
+              width: 30px;
+              border-radius: 15px;
+              object-fit: scale-down;
+            }
+
+            .RContainer {
+              display: flex;
+              flex-direction: column;
+              align-items: flex-start;
+              justify-content: space-evenly;
+              margin-left: $defaultMargin;
+              font-family: Helvetica;
+
+              .Up {
+                font-size: 14px;
+                color: #333333;
+              }
+              .Down {
+                font-family: Helvetica;
+                font-size: 11px;
+                color: #555555;
+
+                .WinRatio {
+                  font-weight: bold;
+                  margin-right: 0.5rem;
+                  &.winRatioDefault {
+                    color: #333333 !important;
+                  }
+                }
+
+                .WinLoose {
+                  padding-right: 0.5rem;
+                  border-right: 1px solid #cdd2d2;
+                }
+
+                .KDA {
+                  font-family: -apple-system, BlinkMacSystemFont, "Open Sans",
+                    "Helvetica Neue", sans-serif;
+                  font-weight: bold;
+                  margin-left: 0.5rem;
+
+                  &.gold {
+                    color: #e19205;
+                  }
+                }
+              }
+            }
+          }
+        }
+
+        .PreferredPosition {
+          min-width: 200px;
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          color: #666666;
+          padding-left: 20px;
+          padding-top: 1rem;
+          padding-bottom: 0.4rem;
+
+          .Title {
+            font-family: "NanumBarunGothic", "Gothic";
+            font-size: 12px;
+            margin-bottom: $defaultMargin;
+          }
+
+          .LaneInfo {
+            display: flex;
+            height: 60px;
+            width: 100%;
+            gap: 0.5rem;
+            img.LaneIcon {
+              display: block;
+              width: 30px;
+              object-fit: scale-down;
+            }
+
+            .Right {
+              display: flex;
+              flex-direction: column;
+              align-items: flex-start;
+              padding-top: 0.3rem;
+              padding-bottom: 0.3rem;
+              justify-content: space-evenly;
+              .Up {
+                font-family: NanumBarunGothic;
+                font-size: 14px;
+              }
+              .Down {
+                font-family: Helvetica;
+                font-size: 11px;
+                .PickRatio {
+                  color: #1f8ecd;
+                  padding-right: 0.5rem;
+                  border-right: 1px solid #cdd2d2;
+                }
+
+                .WRPrefix {
+                  padding-left: 0.5rem;
+                }
+
+                .WinRatio {
+                  padding-left: 0.3rem;
+                  font-weight: bold;
+                  color: #333333;
+                }
+              }
+            }
+          }
+        }
+      }
+
+      .GameRecords {
+        display: flex;
+        flex-direction: column;
+        min-width: 700px;
+        gap: $defaultMargin;
+
+        .GameRecord {
+          border: 1px solid $borderGray;
+          display: flex;
+          flex-direction: row;
+          justify-content: flex-start;
+          height: 100px;
+          width: 100%;
+
+          &.defeat {
+            background-color: #d6b5b2;
+            border-color: #cea7a7;
+          }
+
+          &.victory {
+            background-color: #b0ceea;
+            border-color: #99b9cf;
+          }
+
+          .GR1 {
+            min-width: 70px;
+            color: #555555;
+            font-size: 11px;
+            text-align: center;
+            margin-top: $defaultMargin;
+            margin-bottom: $defaultMargin;
+
+            .GameType {
+              border: 1px solid $borderGray;
+              font-weight: bold;
+              margin-bottom: 2px;
+            }
+
+            .Divider {
+              position: relative;
+              margin-top: 0.3rem;
+              margin-bottom: 0.3rem;
+              left: 25%;
+              width: 40%;
+              border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            }
+
+            .Outcome {
+              margin-bottom: 2px;
+              &.victory {
+                color: #2c709b;
+              }
+
+              &.defeat {
+                color: #d0021b;
+              }
+            }
+          }
+
+          .GR2 {
+            min-width: 110px;
+            display: flex;
+            height: 100%;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 0.4rem;
+
+            .ChampVisuals {
+              display: flex;
+              align-items: center;
+              height: 46px;
+              gap: 4px;
+
+              img.ChampAvatar {
+                display: block;
+                height: 46px;
+                width: 46px;
+                border-radius: 50%;
+                object-fit: fill;
+              }
+
+              .Spells {
+                display: flex;
+                flex-direction: column;
+                gap: 2px;
+                img.Spell {
+                  display: block;
+                  width: 20px;
+                  object-fit: scale-down;
+                }
+              }
+
+              .Runes {
+                display: flex;
+                flex-direction: column;
+                gap: 2px;
+                img.Rune {
+                  display: block;
+                  width: 20px;
+                  object-fit: scale-down;
+                }
+              }
+            }
+
+            .ChampName {
+              color: #555555;
+              font-size: 11px;
+            }
+          }
+
+          .GR3 {
+            min-width: 100px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 0.3rem;
+            font-size: 12px;
+
+            .KDASeperated {
+              font-family: Helvetica;
+              font-weight: bold;
+              font-size: 15px;
+              color: #948e8d;
+              .K {
+                color: #555e5e;
+                margin-right: 0.2rem;
+              }
+              .D {
+                margin-left: 0.2rem;
+                margin-right: 0.2rem;
+                color: #d0021b;
+              }
+              .A {
+                margin-left: 0.2rem;
+                color: #555e5e;
+              }
+            }
+
+            .KDAScoreContainer {
+              font-size: 11px;
+              font-weight: bold;
+
+              .KDAScore {
+                font-family: Helvetica;
+                color: #333333;
+              }
+
+              .KDAScoreSuffix {
+                padding-left: 0.2rem;
+                color: #555e5e;
+              }
+            }
+
+            .Badges {
+              display: flex;
+              gap: 0.2rem;
+              .Badge {
+                padding: 4px;
+                border-radius: 10px;
+                color: white;
+                font-size: 10px;
+                font-family: Helvetica;
+
+                &.kill {
+                  background-color: #ec4f48;
+                }
+
+                &.ace {
+                  background-color: #8c51c5;
+                }
+              }
+            }
+          }
+
+          .GR4 {
+            min-width: 80px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-size: 11px;
+            gap: 0.4rem;
+            color: #555e5e;
+            font-family: Helvetica;
+
+            .PKill {
+              color: #d0021b;
+            }
+
+            .Tier {
+              color: #353a3a;
+              font-weight: bold;
+            }
+          }
+
+          .GR5 {
+            min-width: 120px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 0.4rem;
+
+            .Items {
+              display: grid;
+              grid-template-columns: 20px 20px 20px 20px;
+              gap: 0.2rem;
+
+              img.Item {
+                display: block;
+                width: 20px;
+                height: 20px;
+                object-fit: fill;
+                border-radius: 5px;
+                background-color: rgba(0, 0, 0, 0.1);
+              }
+
+              div.Item {
+                display: block;
+                width: 20px;
+                height: 20px;
+                object-fit: fill;
+                border-radius: 5px;
+                background-color: rgba(0, 0, 0, 0.1);
+              }
+            }
+
+            .ControlWardCount {
+              display: flex;
+              font-family: Helvetica;
+              font-size: 11px;
+              color: black;
+              align-items: center;
+              margin-top: 0.2rem;
+
+              img.ControlWard {
+                display: inline;
+                width: 13px;
+                object-fit: fill;
+                margin-right: 3px;
+              }
+            }
+          }
+
+          .GR6 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            min-width: 220px;
+
+            .Team1 {
+              display: grid;
+              grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+              width: 100%;
+              height: 100%;
+
+              .Player {
+                display: flex;
+                align-items: center;
+                gap: 3px;
+                img.Champion {
+                  display: inline;
+                  width: 18px;
+                  height: 18px;
+                  object-fit: fill;
+                }
+
+                a.SummonerName {
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                  display: -webkit-box;
+                  -webkit-line-clamp: 1;
+                  -webkit-box-orient: vertical;
+                  font-family: Helvetica;
+                  font-size: 11px;
+                  color: #555555;
+                  text-decoration: none;
+                }
+              }
+            }
+
+            .Team2 {
+              display: grid;
+              grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+              width: 100%;
+              height: 100%;
+
+              .Player {
+                display: flex;
+                align-items: center;
+                gap: 3px;
+                img.Champion {
+                  display: inline;
+                  width: 18px;
+                  height: 18px;
+                  object-fit: fill;
+                }
+
+                a.SummonerName {
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                  display: -webkit-box;
+                  -webkit-line-clamp: 1;
+                  -webkit-box-orient: vertical;
+                  font-family: Helvetica;
+                  font-size: 11px;
+                  color: #555555;
+                  text-decoration: none;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
