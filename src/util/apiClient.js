@@ -34,14 +34,6 @@ const httpDelete = (url, params, data) => {
   return httpExec("DELETE", makeUrl(url, params), data);
 };
 
-const httpApiGet = (url, params, data , apiType) => {
-  return httpApiExec("GET",makeUrl(url,params), data,apiType);
-};
-
-const httpApiPost = (url, params, data, apiType) => {
-  return httpApiExec("POST",makeUrl(url, params), data , apiType);
-};
-
 const httpExec = (method, url, data) => {
   console.log('httpExec',method,url,data);
   return new Promise((resolve, reject) => {
@@ -70,44 +62,7 @@ const httpExec = (method, url, data) => {
   });
 };
 
-const httpApiExec = (method, url, data , apiType) => {
-  console.log('httpApiExec',method,url,data);
 
-  let _header = {};
-      _header["Accept"] = "application/json";
-      _header["Content-Type"] = "application/json";
-
-  if(apiType === "lol"){
-    _header["X-Riot-Token"] =  process.env.REACT_APP_RIOT_API_KEY;
-    _header['Access-Control-Allow-Origin'] = 'https://kr.api.riotgames.com';
-    _header['Referer'] = 'https://kr.api.riotgames.com';
-  }else if(apiType === "naver"){
-    
-  }
-
-
-  return new Promise((resolve, reject) => {
-    Axios({
-      method: method,
-      url: url,
-      data: data,
-      withCredentials: true,
-      headers: _header,
-    })
-      .then((response) => {
-        resolve(response.data);
-      })
-      .catch((error) => {
-        if (error.message.includes("401")) {
-            // 세션 만료 시 로직 
-            //alert("로그인이 만료되었습니다. 다시 로그인해주세요");
-            //reactLocalStorage.remove("adminUser");
-            //global.location.href = "/";
-        }
-        reject(error);
-      });
-  });
-};
 
 const httpDownload = (url, params, data) => {
   return new Promise((resolve, reject) => {
@@ -145,6 +100,4 @@ export {
   httpPost,
   httpDelete,
   httpDownload,
-  httpApiGet,
-  httpApiPost
 };

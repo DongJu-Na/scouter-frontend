@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+
+import { getTimeAgoString } from "../util/dates";
+import { toFloatPrecision } from "../util/numbers";
+
+import ReactTooltip from "react-tooltip";
 
 const PlayerStick  = ({imageUrl,summonerName}) => {
-  const dispatch = useDispatch();
   return (
     <div className="Player">
       <img className="Champion" src={imageUrl} alt="" />
       <Link
         to={`/summoner/userName=${summonerName}`}
-        onClick={() => {
-          dispatch(fetchSummoner(summonerName));
-          dispatch(fetchMatches(summonerName));
-          dispatch(fetchMost(summonerName));
-        }}
+        onClick={() => {} }
         className="SummonerName"
       >
         {summonerName}
@@ -74,7 +75,7 @@ const PlayerStick  = ({imageUrl,summonerName}) => {
 const MemoTeamLists = React.memo(TeamLists);
 
 const GameRecord = (game) => {
-  const vd = game.isWin ? "victory" : "defeat";
+  const vd =  "victory"; // game.isWin ? "victory" : "defeat";
 
   const getChampName = (champUrl) => {
     return champUrl.split("champion/")[1].split(".png")[0];
@@ -83,132 +84,101 @@ const GameRecord = (game) => {
   return (
     <div className={`GameRecord ${vd}`}>
       <div className="GR1">
-        <div className="GameType">{game.gameType}</div>
-        <time className="TimeAgo">{getTimeAgoString(game.createDate)}</time>
+        <div className="GameType">{"게임타입"}</div>
+        <time className="TimeAgo">{"경과시간" /*getTimeAgoString(game.createDate)*/}</time>
         <div className="Divider"></div>
         <div className={`Outcome ${vd}`}>{vd}</div>
         <div className="PlayTime">
-          {fp(game.gameLength, 60, 0)}m {game.gameLength % 60}s
+          { 0 /*toFloatPrecision(game.gameLength, 60, 0) */ }분 { /* game.gameLength % 60 */} 0초
         </div>
       </div>
       <div className="GR2">
         <div className="ChampVisuals">
           <img
             className="ChampAvatar"
-            src={game.champion.imageUrl}
+            src="https://opgg-static.akamaized.net/meta/images/lol/champion/Teemo.png"
             alt="ChampAvatar"
           />
           <div className="Spells">
-            <img className="Spell" src={game.spells[0].imageUrl} alt="Spell" />
-            <img className="Spell" src={game.spells[1].imageUrl} alt="Spell" />
+            <img className="Spell" src="https://opgg-static.akamaized.net/meta/images/lol/spell/SummonerFlash.png" alt="Spell" />
+            <img className="Spell" src="https://opgg-static.akamaized.net/meta/images/lol/spell/SummonerDot.png" alt="Spell" />
           </div>
           <div className="Runes">
-            <img className="Rune" src={game.peak[0]} alt="Rune" />
-            <img className="Rune" src={game.peak[1]} alt="Rune" />
+            <img className="Rune" src="https://opgg-static.akamaized.net/meta/images/lol/perk/8005.png" alt="Rune" />
+            <img className="Rune" src="https://opgg-static.akamaized.net/meta/images/lol/perkStyle/8400.png" alt="Rune" />
           </div>
         </div>
-        <div className="ChampName">{getChampName(game.champion.imageUrl)}</div>
+        <div className="ChampName">{ "챔피언명"/*getChampName(game.champion.imageUrl)*/}</div>
       </div>
       <div className="GR3">
         <div className="KDASeperated">
-          <span className="K">{game.stats.general.kill}</span>/
-          <span className="D">{game.stats.general.death}</span>/
-          <span className="A">{game.stats.general.assist}</span>
+          <span className="K">{"0"/*game.stats.general.kill*/}</span>/
+          <span className="D">{"0"/*game.stats.general.death*/}</span>/
+          <span className="A">{"0"/*game.stats.general.assist*/}</span>
         </div>
         <div className="KDAScoreContainer">
-          <span className="KDAScore">{game.stats.general.kdaString}</span>
+          <span className="KDAScore">{"KDA스코어"/*game.stats.general.kdaString*/}</span>
           <span className="KDAScoreSuffix">KDA</span>
         </div>
         <div className="Badges">
-          {game.stats.general.largestMultiKillString && (
+          
             <div className="Badge kill">
-              {game.stats.general.largestMultiKillString}
+              더블킬
             </div>
-          )}
-          {game.stats.general.opScoreBadge && (
-            <div className="Badge ace">{game.stats.general.opScoreBadge}</div>
-          )}
+          
+            <div className="Badge ace">ACE</div>
+          
         </div>
       </div>
       <div className="GR4">
-        <div className="Level">Level {game.champion.level}</div>
+        <div className="Level">Level </div>
         <div className="CS">
-          {game.stats.general.cs} ({game.stats.general.csPerMin}) CS
+          0 (0) CS
         </div>
         <div className="PKill">
-          P/Kill {game.stats.general.contributionForKillRate}
+          P/Kill
         </div>
-        {game.gameType.includes("Rank") && (
-          <>
             <div className="TierAverage">Tier Average</div>
-            <div className="Tier">{game.tierRankShort}</div>
-          </>
-        )}
+            <div className="Tier"></div>
       </div>
       <div className="GR5">
-        <div className="Items">
-          {[
-            ...game.items,
-            { imageUrl: null },
-            { imageUrl: null },
-            { imageUrl: null },
-            { imageUrl: null },
-            { imageUrl: null },
-            { imageUrl: null },
-            { imageUrl: null },
-          ]
-            .slice(0, 7)
-            .map((item, idx) => {
-              if (item.imageUrl === null) {
-                return (
-                  <div
-                    className="Item"
-                    key={`Game_${game.gameId}_Item_Empty_${idx}`}
-                  />
-                );
-              }
 
-              const itemId = itemParser(item.imageUrl);
-              return (
-                <div
-                  className="ItemWrapper"
-                  key={`Game_${game.gameId}_Item_${item.imageUrl}_${idx}`}
-                >
+        <div className="Items">
+              <div className="ItemWrapper">
                   <img
                     className="Item"
-                    src={item.imageUrl}
+                    src="https://opgg-static.akamaized.net/meta/images/lol/item/3157.png?image=q_auto,f_webp,w_44&v=1673037181628"
                     alt=""
                     data-tip
-                    data-for={`${itemId}`}
+                    data-for="test2"
                   />
                   <ReactTooltip
-                    id={`${itemId}`}
-                    key={`ItemTips_${itemId}_${idx}`}
+                    id="test2"
                   >
-                    <div className="ItemTooltip">
-                      <b className="TooltipItemName">
-                        {savedItems[itemId].name}
-                      </b>
-                      <br />
+                      <div className="ItemTooltip">
+                        <b className="TooltipItemName">
+                          존야의 모래시계
+                        </b>
+                        <br />
                       <span className="TooltipItemPlainText">
-                        {savedItems[itemId].plaintext}
+                         ㅁㄴㅇ
                       </span>
                       <br />
                       <span>Cost: </span>
                       <span className="TooltipItemPrice">
-                        {savedItems[itemId].gold.base} (
-                        {savedItems[itemId].gold.base})
+                        
                       </span>
                     </div>
+                    
                   </ReactTooltip>
                 </div>
-              );
-            })}
-          <img className="Item" src={BuildIcon} alt="Build" />
+
+
+          <img className="Item" src="" alt="Build" />
         </div>
+
         <div className="ControlWardCount">
-          <img className="ControlWard" src={RedWardIcon} alt="" />
-          Control Ward {game.stats.ward.visionWardsBought}
+          <img className="ControlWard" src="https://opgg-static.akamaized.net/meta/images/lol/item/3364.png?image=q_auto,f_webp,w_44&v=1673037181628" alt="" />
         </div>
       </div>
       <MemoTeamLists gameId={game.gameId} summonerName={game.summonerName} />

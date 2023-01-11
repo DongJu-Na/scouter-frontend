@@ -1,12 +1,14 @@
 const { createProxyMiddleware } = require('http-proxy-middleware');
 
 module.exports = function(app) {
-  console.log(app);
   app.use(
-    '/lol', // 불러오려는 server 의 api path
+    '/api',
     createProxyMiddleware({
-      target: process.env.REACT_APP_RIOT_API_URL, // server 주소를 넣어주면 된다.
+      target: 'http://1.234.189.11:8080',
       changeOrigin: true,
+      pathRewrite: {
+        '^/api': '' // URL ^/api -> 공백 변경
+        }
     })
   );
 };

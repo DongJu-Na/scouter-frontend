@@ -1,26 +1,30 @@
 import React from "react";
-import { useParams } from "react-router-dom";
+
 
 import Footer from "../components/Footer";
 import SearchBar from "../components/SearchBar";
 import QuickLook from "../components/QuickLook";
 import Summary from "../components/Summary";
 import RankGameOverView from "../components/RankGameOverView";
+import GameRecordList from "../components/GameRecordList";
+import WinRatioSummary from "../components/WinRatioSummary";
+
+import { useRecoilValue } from "recoil";
+import { summonerDataState } from "../atom";
 
 function Summoner() {
+    const summonerData = useRecoilValue(summonerDataState);
 
-    const { userName } = useParams(); // pathVariable = id (경로의 변수 담아서 전달)
-    console.log(userName); // id check (콘솔에 출력)
 
     return (
                 <div className="Summoner">
                 <SearchBar />
-                <QuickLook />
+                <QuickLook summonerData={summonerData} />
                 <main className="SummonerBody">
                 <div className="SideContent">
-                    <RankGameOverView rankType="Ranked Solo" />
-                    <RankGameOverView rankType="Flex 5:5 Rank" />
-                    <></>
+                    <RankGameOverView rankType="솔로랭크" />
+                    <RankGameOverView rankType="자유랭크" />
+                    <WinRatioSummary />
                 </div>
                 <div className="RealContent">
                     <div className="QueueTypes">
@@ -28,27 +32,25 @@ function Summoner() {
                         className="QueueType ${gameType === 'Total' ? 'Selected' : ''}"
                         onClick={(e) => {}}
                     >
-                        Total
+                        전체
                     </div>
                     <div
                         className={'QueueType ${gameType === "Ranked Solo" ? "Selected" : ""}'}
                         onClick={(e) => {}}
                     >
-                        Ranked Solo
+                        솔로랭크
                     </div>
                     <div
                         className={'QueueType ${ gameType === "Ranked Flex" ? "Selected" : ""}'}
                         onClick={(e) => { 'dispatch(switchGameType({ gameType: "Ranked Flex" }));'
                         }}
                     >
-                        Ranked Flex
+                        자유랭크
                     </div>
                     </div>
-                    <Summary />
-                    {/* 
-                        
-                        <GameRecordList />
-                    */}
+                    <Summary />    
+                    <GameRecordList />
+                    
                     
                 </div>
                 </main>

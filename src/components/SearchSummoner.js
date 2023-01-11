@@ -5,19 +5,20 @@ import {StarIcon , CloseIcon} from "../assets/svgIcon"
 
 import useOnClickOutside from "../util/useOnClickOutside";
 
-import { useRecoilState } from "recoil";
-import { summonerState } from "../atom/index";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import { summonerState , summonerDataState} from "../atom/index";
 
 import { useNavigate } from "react-router-dom";
 
-import { httpApiGet , httpUrl } from "../util/apiClient";
-
+import axios from "axios";
 function SearchSummoner(){
     const wrapperRef = useRef(null);
     const [focus,setFocus] = useState(false);
     const [keyword,setKeyword] = useState('');
     const [tabKey, setTabKey] = useState("recent");
     const [list , setList] = useRecoilState(summonerState);
+    const setSummoner = useSetRecoilState(summonerDataState);
+
     const navigate = useNavigate();
     
     useEffect(()=>{
@@ -46,35 +47,37 @@ function SearchSummoner(){
  
         if(findIndex === -1 ){
             copyArray.unshift({ "name" : query, "favoritesFlag" : false });
-        }else if(findIndex !== -1 ){              
-            return false;
+        }else if(findIndex !== -1 ){    
+            getSummoner(query,sType,copyArray);          
+            return false;    
         }
-
-
-
-        getSummoner(query);
-        
-        /*
-        setList((prevVal)=>({
-            ...prevVal,
-            [sType] :  copyArray
-        }));
-
-        navigate(`/summoner/userName=${query}`);
-        */
-        
+        getSummoner(query,sType,copyArray);                
     }
 
-    const getSummoner = (query) => {
+    const getSummoner = (query,sType,copyArray) => {
         if(query === "") return false;
 
-        httpApiGet(httpUrl.getSummoner, [query], {},"lol")
-        .then((res) => {
+        axios({
+            method: 'get',
+            url: "/api/lol/api/getSummoners/" + query,
+            withCredentials: true,
+            data: { }
+          }).then((res)=>{
             console.log(res);
-        })
-        .catch((e) => { 
-          console.error();       
-        });
+            
+            if(res.status === 200){
+                
+                setList((prevVal)=>({
+                    ...prevVal,
+                    [sType] :  copyArray
+                }));
+                setSummoner(res.data);
+                navigate(`/summoner/userName=${query}`);
+            }
+            
+          }).catch((err)=>{
+            console.log(err);
+          });
 
     }
 
@@ -140,9 +143,10 @@ function SearchSummoner(){
                 // 최근검색
                  list[tabKey].length > 0 ?
                     list[tabKey].map((item, idx) => {
+                        //
                                 return(
                                     <div className="SummonerSearched" key={"div"+idx}>
-                                        <span className="SummonerName">{item.name}</span>
+                                        <span className="SummonerName" style={{"flex" : "1"}} onClick={() => onSearch(item.name,"recent")}>{item.name}</span>
                                         <span className="SummonerBtn">
                                             <button onClick={()=>onFavorites(item)}><StarIcon className={ item.favoritesFlag ? "active" : "" } /></button>
                                             <button onClick={()=>onDelete(item,tabKey+"")}><CloseIcon /></button>
@@ -161,7 +165,7 @@ function SearchSummoner(){
                         list[tabKey].map((item, idx) => {
                             return(
                                 <div className="SummonerSearched" key={"div"+idx}>
-                                    <span className="SummonerName">{item.name}</span>
+                                    <span className="SummonerName" style={{"flex" : "1"}} onClick={() => onSearch(item.name,"favorites")}>{item.name}</span>
                                     <span className="SummonerBtn">
                                         <button onClick={()=>onDelete(item,tabKey+"")}><CloseIcon /></button>
                                     </span>

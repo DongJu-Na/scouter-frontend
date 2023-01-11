@@ -12,9 +12,7 @@ root.render(
   <>
     <RecoilRoot>
       <BrowserRouter basename={process.env.NODE_ENV === "development"  ?  "/" : process.env.PUBLIC_URL }>
-        <React.StrictMode>
           <App />
-        </React.StrictMode>
       </BrowserRouter>
     </RecoilRoot>
   </>

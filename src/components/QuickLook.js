@@ -1,27 +1,29 @@
-import React from "react"
+import React, { useState } from "react";
 
-function QuickLook(){
+
+function QuickLook({summonerData}){
+    console.log(summonerData);
+
     return(
         <div className="QuickLook">
             <div className="Seasons">
                 <div className="SeasonBadges">
-                    <div class="SeasonBadge">S2022 Platinum 2</div>
-                    <div class="SeasonBadge">S2021 Platinum 4</div>
-                    <div class="SeasonBadge">S2020 Gold 4</div>                    
+                    <div className="SeasonBadge">S2022 Platinum 2</div>
+                    <div className="SeasonBadge">S2021 Platinum 4</div>
+                    <div className="SeasonBadge">S2020 Gold 4</div>                    
                 </div>
                 </div>
                 <div className="QuickLookBottomContainer">
-                <img className="Avatar" src="https://opgg-static.akamaized.net/images/profile_icons/profileIcon4558.jpg?image=q_auto,f_webp,w_auto&v=1672400108682" alt="avatar" />
-                <img
-                    className="BorderImage"
-                    src="https://opgg-static.akamaized.net/images/borders2/challenger.png"
-                    alt="bracket"
-                />
-        
-                <div className="UserNameAndRaderInfo">
-                    <div className="UserName"> <b>소환사명</b>  </div>
-                    <span class="LadderRank">래더 랭킹<span class="Accent"> 162,782 위 </span> (상위 3.62%) </span>
-                </div>
+                    <img className="Avatar" src={`https://ddragon.leagueoflegends.com/cdn/13.1.1/img/profileicon/${summonerData.profileIconId}.png`} alt="avatar" />
+                
+                    <div className="Champlevel">
+                        <span>340</span>
+                    </div>
+            
+                    <div className="UserNameAndRaderInfo">
+                        <div className="UserName"> <b>{summonerData.name}</b>  </div>
+                        <span className="LadderRank">래더 랭킹<span className="Accent"> 162,782 위 </span> (상위 3.62%) </span>
+                    </div>
                 </div>
       </div>
     )
