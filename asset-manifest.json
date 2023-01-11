@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/scouter-frontend/static/css/main.38bad6a6.css",
-    "main.js": "/scouter-frontend/static/js/main.f4e4363d.js",
+    "main.css": "/scouter-frontend/static/css/main.76524662.css",
+    "main.js": "/scouter-frontend/static/js/main.fbe6b27d.js",
     "static/media/logo.png": "/scouter-frontend/static/media/logo.9da0243b082027cb70b9.png",
     "static/media/GG.svg": "/scouter-frontend/static/media/GG.79005fb7c83978e3ab79d4a634f81695.svg",
     "index.html": "/scouter-frontend/index.html",
-    "main.38bad6a6.css.map": "/scouter-frontend/static/css/main.38bad6a6.css.map",
-    "main.f4e4363d.js.map": "/scouter-frontend/static/js/main.f4e4363d.js.map"
+    "main.76524662.css.map": "/scouter-frontend/static/css/main.76524662.css.map",
+    "main.fbe6b27d.js.map": "/scouter-frontend/static/js/main.fbe6b27d.js.map"
   },
   "entrypoints": [
-    "static/css/main.38bad6a6.css",
-    "static/js/main.f4e4363d.js"
+    "static/css/main.76524662.css",
+    "static/js/main.fbe6b27d.js"
   ]
 }
