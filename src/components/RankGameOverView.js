@@ -1,41 +1,49 @@
 import React from "react";
 
-function RankGameOverView({rankType}) {
-  const league = undefined;
+function RankGameOverView({rankType,data}) {
 
-  if (league === undefined) {
+
+  // unrank
+  if (data === undefined) {
     return (
       <div className="RankGame">
         <div className="RankIconWrapper">
-          <img className="UnRanked" src="https://opgg-static.akamaized.net/images/medals_new/platinum.png?image=q_auto,f_webp,w_144&v=1672400108682" alt="gold3" />
+          <img className="UnRanked" src={require(`../assets/rank/Emblem_UNRANKED.png`)} alt="UNRANKED" />
         </div>
         <div className="RankInfo">
           <div className="GameType">{rankType}</div>
           <div className="Tier">Unranked</div>
         </div>
       </div>
+    );     
+  }else{
+    const winRate = Math.floor(
+      (data.wins / (data.wins + data.losses || 1)) * 100
+    );
+
+    
+    return (
+      <div className="RankGame">
+        <div className="RankIconWrapper">
+          <img className="RankIcon" src={require(`../assets/rank/Emblem_${data.tier}.png`)} alt={data.tier} />
+        </div>
+        <div className="RankInfo">
+          <div className="GameType">{data.queueType}</div>
+          <div className="PreferredPosition">top (total 27 Played)</div>
+          <div className="Tier">{`${data.tier} ${data.rank}`}</div>
+          <div className="Points">
+            <div className="LP">{data.leaguePoints}</div>
+            <div className="WL">
+              &nbsp; / {data.wins}W {data.losses}L
+            </div>
+          </div>
+          <div className="LeagueName">Win Ratio {winRate}%</div>
+        </div>
+      </div>
     );
   }
 
-  return (
-    <div className="RankGame">
-      <div className="RankIconWrapper">
-        <img className="RankIcon" src="" alt="gold3" />
-      </div>
-      <div className="RankInfo">
-        <div className="GameType">tierRank.name</div>
-        <div className="PreferredPosition">top (total 27 Played)</div>
-        <div className="Tier">tier</div>
-        <div className="Points">
-          <div className="LP">tierRank.lp</div>
-          <div className="WL">
-            &nbsp; / 0W 0L
-          </div>
-        </div>
-        <div className="LeagueName">Win Ratio 0%</div>
-      </div>
-    </div>
-  );
+
 };
 
 export default RankGameOverView;

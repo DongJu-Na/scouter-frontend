@@ -10,7 +10,9 @@ import { summonerState , summonerDataState} from "../atom/index";
 
 import { useNavigate } from "react-router-dom";
 
+import { httpUrl } from "../util/urlMapper";
 import axios from "axios";
+
 function SearchSummoner(){
     const wrapperRef = useRef(null);
     const [focus,setFocus] = useState(false);
@@ -41,13 +43,15 @@ function SearchSummoner(){
         let findIndex = list[sType].findIndex(data => data.name === query);
         let copyArray = [...list[sType]];
 
-        if(copyArray.length === 5){
+        if(copyArray.length > 5){
             copyArray.splice(copyArray.length - 1);
         }  
  
         if(findIndex === -1 ){
             copyArray.unshift({ "name" : query, "favoritesFlag" : false });
         }else if(findIndex !== -1 ){    
+            // copyArray.splice(0, 0, copyArray[findIndex]);
+            
             getSummoner(query,sType,copyArray);          
             return false;    
         }
@@ -56,17 +60,16 @@ function SearchSummoner(){
 
     const getSummoner = (query,sType,copyArray) => {
         if(query === "") return false;
-
+        console.log(httpUrl.getSummoner + query);
         axios({
             method: 'get',
-            url: "/api/lol/api/getSummoners/" + query,
+            url: httpUrl.getSummoner + query,
             withCredentials: true,
             data: { }
           }).then((res)=>{
-            console.log(res);
-            
+            console.log("getSummoner",res);
+
             if(res.status === 200){
-                
                 setList((prevVal)=>({
                     ...prevVal,
                     [sType] :  copyArray

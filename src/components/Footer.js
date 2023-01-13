@@ -29,29 +29,20 @@ function Footer() {
         </li>
       </ul>
       <div className="footer__copyright">
-        © 2012-2021 OP.GG. OP.GG isn’t endorsed by Riot Games and doesn’t
-        reflect the views or opinions of Riot Games or anyone officially
-        involved in producing or managing League of Legends. League of Legends
-        and Riot Games are trademarks or registered trademarks of Riot Games,
-        Inc. League of Legends © Riot Games, Inc.
+        © 2023 DongJu-Na , JungHo-Kim
+        https://github.com/DongJu-Na/
+        https://github.com/icon7777/
       </div>
-      <ul className="footer__sns">
-        <li className="footer__sns__item footer__sns__item--twitter">
-          <a href="http://twitter.com/globalopgg/">
-            <i>Twitter</i>
-          </a>
-        </li>
-        <li className="footer__sns__item footer__sns__item--instagram">
-          <a href="https://www.instagram.com/opgginc/">
-            <i>Instagram</i>
-          </a>
-        </li>
-        <li className="footer__sns__item footer__sns__item--facebook">
-          <a href="https://www.facebook.com/lolopgg/">
-            <i>Facebook</i>
-          </a>
-        </li>
-      </ul>
+      {/* 
+          <ul className="footer__sns">
+            <li className="footer__sns__item footer__sns__item--twitter">
+              <a href="http://twitter.com/globalopgg/">
+                <i>Twitter</i>
+              </a>
+            </li>
+          </ul>      
+      */}
+
     </div>
   );
 };

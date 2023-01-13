@@ -159,7 +159,7 @@ function Summary(){
               <img
                 className="LaneIcon"
                 src={positionImgFactory("TOP")}
-                alt="Sup"
+                alt="Top"
               />
               <div className="Right">
                 <div className="Up">Top</div>

@@ -1,8 +1,12 @@
 import React, { useState } from "react";
 
+import { useRecoilValue } from "recoil";
+import { summonerDataState} from "../atom";
 
-function QuickLook({summonerData}){
-    console.log(summonerData);
+
+function QuickLook(){
+
+    const summonerData = useRecoilValue(summonerDataState);
 
     return(
         <div className="QuickLook">
@@ -17,7 +21,7 @@ function QuickLook({summonerData}){
                     <img className="Avatar" src={`https://ddragon.leagueoflegends.com/cdn/13.1.1/img/profileicon/${summonerData.profileIconId}.png`} alt="avatar" />
                 
                     <div className="Champlevel">
-                        <span>340</span>
+                        <span>{summonerData.summonerLevel}</span>
                     </div>
             
                     <div className="UserNameAndRaderInfo">
