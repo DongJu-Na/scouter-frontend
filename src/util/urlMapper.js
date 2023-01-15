@@ -14,11 +14,11 @@ export const httpUrl = {
     t3 : "/asia/lol/match/v5/matches/by-puuid/",
     t4 : "/asia/lol/match/v5/matches/",
 
-    getSummoner : "/api/lol/api/getSummoners/", // 소환사 조회
-    getLeagueInfo : "/api/lol/api/getLeagueInfo/", // 리그 정보 조회
-    getMatchId : "/api/lol/api/getMatchId/", // 경기ID 조회
-    getMatchDetail : "/api/lol/api/getMatchDetail/", // 경기상세정보 조회
-    getMatchTimeLine : "/api/lol/api/getMatchTimeLine/", // 경기타임라인 조회
+    getSummoner : "/api/lol/getSummoners/", // 소환사 조회
+    getLeagueInfo : "/api/lol/getLeagueInfo/", // 리그 정보 조회
+    getMatchId : "/api/lol/getMatchId/", // 경기ID 조회
+    getMatchDetail : "/api/lol/getMatchDetail/", // 경기상세정보 조회
+    getMatchTimeLine : "/api/lol/getMatchTimeLine/", // 경기타임라인 조회
     
 };
 
