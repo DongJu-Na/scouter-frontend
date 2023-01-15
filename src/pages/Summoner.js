@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-
+import Header from "../components/Header";
 import Footer from "../components/Footer";
 import SearchBar from "../components/SearchBar";
 import QuickLook from "../components/QuickLook";
@@ -101,6 +101,7 @@ function Summoner() {
 
     return (
                 <div className="Summoner">
+                <Header />
                 <SearchBar />
                 <QuickLook />
                 <main className="SummonerBody">

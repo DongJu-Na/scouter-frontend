@@ -5,27 +5,13 @@ function Footer() {
     <div className="footer">
       <ul className="footer__links">
         <li className="footer__links__item">
-          <a href="https://www.op.gg/about/">About OP.GG</a>
+          <a href="mailto:ehdeld123@gmail.com">Business</a>
         </li>
         <li className="footer__links__item">
-          <a href="https://www.op.gg/about/logos/">Logo History</a>
+          <a href="mailto:ehdeld123@gmail.com">Advertise</a>
         </li>
         <li className="footer__links__item">
-          <b>
-            <a href="https://www.op.gg/about/privacy/">Privacy Policy</a>
-          </b>
-        </li>
-        <li className="footer__links__item">
-          <a href="https://opgg.helpscoutdocs.com/collection/1-opgg">Help</a>
-        </li>
-        <li className="footer__links__item">
-          <a href="mailto:contact@op.gg">Business</a>
-        </li>
-        <li className="footer__links__item">
-          <a href="mailto:ads@op.gg">Advertise</a>
-        </li>
-        <li className="footer__links__item">
-          <a href="mailto:service@op.gg">Feedback</a>
+          <a href="mailto:ehdeld123@gmail.com">Feedback</a>
         </li>
       </ul>
       <div className="footer__copyright">

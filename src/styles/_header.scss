@@ -1,0 +1,39 @@
+.header1{
+  a{
+    color: #FFFFFF;
+    font-weight: bold;
+    text-decoration: none;
+  }
+
+  .l-menu1 {
+    display: flex;
+    background: rgb(34 24 34);
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  }
+  
+  ul,
+  li {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .menu1 {
+    display: contents;
+    align-items: center;
+    list-style: none;
+  }
+  
+  .menu__item1 {
+    font-size: 15px;
+  }
+  
+  li {
+    margin-left: 25px !important;
+    margin-right: 25px !important;
+  }
+}
+

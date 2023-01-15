@@ -1,0 +1,375 @@
+.ranking{
+  height: 100vh;
+  width: 100vw;
+  background-color: rgb(34 24 34);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+
+  .inputText {
+    font-size: 14px;
+  }
+  .wrap-container {
+    position: relative;
+    min-height: 700px;
+    padding-bottom: 120px;
+    text-align: center;
+  }
+  .pageHeaderWrap {
+    padding-top: 28px;
+    width: 970px;
+    margin: 0 auto;
+  }
+
+  .menu {
+    margin: 0 0 17px;
+    border-bottom: 1px solid #d7dada;
+    display: grid;
+    grid-template-columns: 100px 300px;
+    justify-content: space-between;
+    padding-bottom: 15px;
+  }
+  .searchItem {
+    display: inline-block;
+  }
+
+  .inputText {
+    display: inline-block;
+    width: 168px;
+    margin-right: 13px;
+    padding-right: 25px;
+  }
+
+  .input {
+    font-size: 14px;
+    width: 196px;
+    height: 17px;
+    line-height: 17px;
+    width: 100%;
+    padding: 10px 13px 9px;
+    border: 1px solid #cdd2d2;
+  }
+  /* 버튼 css */
+  .button-SemiRound-Blue {
+    border: 1px solid #1a78ae;
+    background: #1f8ecd;
+    color: #f2f2f2;
+    font-size: 13px;
+    outline: none;
+    text-align: center;
+    vertical-align: middle;
+    margin-left: 6px;
+    width: 82px;
+    height: 37px;
+  }
+
+  .text {
+    float: left;
+    color: #4a4a4a;
+    font-size: 14px;
+  }
+  .small {
+    float: right;
+    color: #9b9b9b;
+    font-size: 12px;
+  }
+
+  .ladderRankingLayoutWrap {
+    width: 970px;
+    margin: 0 auto;
+    min-height: 500px;
+  }
+  small,
+  div,
+  p,
+  span,
+  button {
+    font-family: Helvetica, "Malgun Gothic", "Apple SD Gothic Neo", AppleGothic,
+      Dotum, Arial, Tahoma;
+  }
+
+  .LadderRankingLayout > .ContentWrap > .Content {
+    width: 970px;
+    margin: 0 auto;
+    min-height: 500px;
+  }
+
+  .ranking-table {
+    width: 100%;
+    table-layout: fixed;
+    background-color: #ededed;
+    border: solid 1px #cdd2d2;
+  }
+
+  colgroup {
+    display: table-column-group;
+  }
+
+  .ranking-table {
+    border-collapse: collapse;
+    border-spacing: 0;
+  }
+
+  thead {
+    display: table-header-group;
+    vertical-align: middle;
+    border-color: inherit;
+  }
+
+  .ranking-table__header {
+    height: 41px;
+    padding: 0;
+    border-bottom: 1px solid #cdd2d2;
+    background: #f2f2f2;
+    line-height: 17px;
+    font-size: 14px;
+    text-align: left;
+    color: #444b4b;
+    font-weight: normal;
+  }
+
+  .ranking-table__cell--rank {
+    text-align: center;
+    color: #444b4b;
+  }
+
+  .ranking-table__cell--summoner {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .ranking-table__cell--tier,
+  .ranking-table__cell--lp,
+  .ranking-table__cell--level,
+  .ranking-table__cell--winratio {
+    color: #787878;
+  }
+
+  .ranking-table__cell--winratio {
+    text-align: center;
+  }
+
+  .ranking-table__cell--summoner a {
+    display: inline-block;
+    text-decoration: none;
+  }
+
+  .winratio-graph {
+    position: relative;
+    display: inline-block;
+    width: 150px;
+    height: 20px;
+    vertical-align: middle;
+  }
+
+  .winratio-graph__fill--left {
+    background: #3d95e5;
+
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    z-index: 1;
+  }
+
+  .winratio__text {
+    vertical-align: middle;
+    margin-left: 10px;
+    line-height: 16px;
+    font-family: Helvetica, AppleSDGothic, "Apple SD Gothic Neo", AppleGothic,
+      Arial, Tahoma;
+    font-size: 14px;
+    color: #4a4a4a;
+  }
+
+  .winratio-graph__text {
+    position: absolute;
+    top: 3px;
+    height: 100%;
+    line-height: 15px;
+    font-size: 12px;
+    color: #fff;
+    font-weight: bold;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .winratio-graph__fill--right {
+    width: 100%;
+    background: #ee5a52;
+  }
+
+  .winratio-graph__text--right {
+    position: absolute;
+    top: 3px;
+    height: 100%;
+    line-height: 15px;
+    font-size: 12px;
+    color: #fff;
+    font-weight: bold;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    right: 8px;
+    text-align: right;
+  }
+
+  /* 
+  .winratio-graph__text--left {
+    position: absolute;
+    top: 3px;
+    height: 100%;
+    line-height: 15px;
+    font-size: 12px;
+    color: #fff;
+    font-weight: bold;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    right: 8px;
+    text-align: right;
+  } */
+
+  .winratio-graph__fill {
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: #fff;
+    height: 100%;
+    border-radius: 4px;
+  }
+
+  .winratio-graph__text {
+    position: absolute;
+    top: 3px;
+    height: 100%;
+    line-height: 15px;
+    font-size: 12px;
+    color: #fff;
+    font-weight: bold;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .ranking-pagination {
+    text-align: center;
+    margin-top: 30px;
+  }
+
+  .ranking-pagination__item:first-child {
+    margin-left: 0;
+  }
+
+  .ranking-pagination__desc {
+    margin-top: 20px;
+    line-height: 17px;
+    font-size: 14px;
+    text-align: center;
+    color: #a0a0a0;
+  }
+
+  .ranking-pagination__desc span {
+    color: #4a4a4a;
+  }
+
+  .ranking-table__cell {
+    border-bottom: 1px solid #cdd2d2;
+    height: 54px;
+    line-height: 16px;
+    font-family: Helvetica, AppleSDGothic, "Apple SD Gothic Neo", AppleGothic,
+      Arial, Tahoma;
+    font-size: 14px;
+  }
+
+  .ranking-table__cell--summoner span {
+    vertical-align: middle;
+    line-height: 19px;
+    font-size: 15px;
+    font-weight: bold;
+    color: #444b4b;
+  }
+
+  /* radius 이미지 */
+  .ranking-table__cell--summoner img {
+    margin-right: 12px;
+    vertical-align: middle;
+    border-radius: 50%;
+    width: 38px;
+    height: 38px;
+  }
+
+  .ranking-table__cell {
+    text-align: start;
+  }
+
+  .ranking-table__cellranking-table__cell--rank {
+    padding-left: 0px;
+    text-align: center;
+    color: #444b4b;
+    font-size: 14px;
+  }
+
+  /* 빨파 바 */
+
+  .ranking-pagination {
+    text-align: center;
+    margin-top: 30px;
+  }
+  .ranking-pagination__item:first-child {
+    margin-left: 0;
+  }
+
+  li {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .ranking-pagination__item--arrow a {
+    background: #f2f2f2;
+  }
+
+  .ranking-pagination__item a {
+    display: block;
+    width: 90px;
+    padding: 4px 0 8px;
+
+    border: solid 1px #cdd2d2;
+    line-height: 16px;
+    font-family: Helvetica, AppleSDGothic, "Apple SD Gothic Neo", AppleGothic,
+      Arial, Tahoma;
+    font-size: 14px;
+    text-align: center;
+    text-decoration: none;
+    color: #444b4b;
+    box-sizing: border-box;
+  }
+  .ranking-pagination__item {
+    display: inline-block;
+    margin-left: 10px;
+  }
+
+  .winratio-graph__text--left {
+    margin-top: 3px;
+    margin-left: 6px;
+  }
+
+  .ranking-list-paging {
+    height: 64px;
+  }
+
+  .ranking-list-paging__button {
+    line-height: 17px;
+    font-size: 14px;
+    color: #7b858e;
+    border-radius: 4px;
+    background-color: #ffffff;
+    border: 1px solid #dddfe4;
+    width: 77px;
+    height: 40px;
+    margin-top: 12px;
+  }
+}
+
