@@ -1,15 +1,25 @@
 {
   "files": {
     "main.css": "/scouter-frontend/static/css/main.76524662.css",
-    "main.js": "/scouter-frontend/static/js/main.fbe6b27d.js",
+    "main.js": "/scouter-frontend/static/js/main.23410d1c.js",
     "static/media/logo.png": "/scouter-frontend/static/media/logo.9da0243b082027cb70b9.png",
+    "static/media/Emblem_CHALLENGER.png": "/scouter-frontend/static/media/Emblem_CHALLENGER.bcddbed6863c75984019.png",
+    "static/media/Emblem_MASTER.png": "/scouter-frontend/static/media/Emblem_MASTER.6cebbe60a644ce013839.png",
+    "static/media/Emblem_GRANDMASTER.png": "/scouter-frontend/static/media/Emblem_GRANDMASTER.9a64d7260df3f99028cd.png",
+    "static/media/Emblem_DIAMOND.png": "/scouter-frontend/static/media/Emblem_DIAMOND.8249cef116bf02ddd1bb.png",
+    "static/media/Emblem_PLATINUM.png": "/scouter-frontend/static/media/Emblem_PLATINUM.26c61fd5b19266948171.png",
+    "static/media/Emblem_BRONZE.png": "/scouter-frontend/static/media/Emblem_BRONZE.ad96bf19e0574bfb508f.png",
+    "static/media/Emblem_SILVER.png": "/scouter-frontend/static/media/Emblem_SILVER.ba09227683288589c6c1.png",
+    "static/media/Emblem_GOLD.png": "/scouter-frontend/static/media/Emblem_GOLD.617f139ec1ac6fc0f55c.png",
+    "static/media/Emblem_IRON.png": "/scouter-frontend/static/media/Emblem_IRON.9c3d63ce3cc7c09529b5.png",
+    "static/media/Emblem_UNRANKED.png": "/scouter-frontend/static/media/Emblem_UNRANKED.03c45a6afe540fdb3fb4.png",
     "static/media/GG.svg": "/scouter-frontend/static/media/GG.79005fb7c83978e3ab79d4a634f81695.svg",
     "index.html": "/scouter-frontend/index.html",
     "main.76524662.css.map": "/scouter-frontend/static/css/main.76524662.css.map",
-    "main.fbe6b27d.js.map": "/scouter-frontend/static/js/main.fbe6b27d.js.map"
+    "main.23410d1c.js.map": "/scouter-frontend/static/js/main.23410d1c.js.map"
   },
   "entrypoints": [
     "static/css/main.76524662.css",
-    "static/js/main.fbe6b27d.js"
+    "static/js/main.23410d1c.js"
   ]
 }
