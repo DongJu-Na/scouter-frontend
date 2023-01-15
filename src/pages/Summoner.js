@@ -12,6 +12,7 @@ import WinRatioSummary from "../components/WinRatioSummary";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { summonerDataState , summonerLeagueDataState , matchDataState , matchIdDataState } from "../atom";
 
+import { httpGet } from "../util/apiClient";
 import { httpUrl } from "../util/urlMapper";
 import axios from "axios";
 
@@ -24,71 +25,79 @@ function Summoner() {
     const [gameType , setGameType] = useState('Total');
 
     useEffect(()=>{
-        getLeagueInfo(summonerData.id);
-    },[summonerData])
+        console.log("useEffect", summonerData);
+        if(summonerData){
+            getLeagueInfo(summonerData.id);
+            getMatchId(summonerData.puuid);
+        }
+    },[summonerData]);
+
+    /*
+    useEffect(()=>{
+        console.log("useEffect - 2");
+            for(let x=0;x < matchId.length; x++){
+                getMatchDetail(matchId[x]);
+            }
+            console.log("match",match);
+    },[matchId]);
+    */
+    
 
     const getLeagueInfo = (query) => {
         if(query === "") return false;
-        
-        axios({
-            method: 'get',
-            url: httpUrl.getLeagueInfo + query,
-            withCredentials: true,
-            data: { }
-          }).then((res)=>{
-            console.log("getLeagueInfo",res);
-            
+
+        httpGet(httpUrl.t2 + query, {})
+        .then((res) => {
             if(res.status === 200){
-                setLeaugeData(res.data);
+                if(res.data.length ===0){
+                    setLeaugeData([]);
+                }else if(res.data.length > 0){
+                    setLeaugeData(res.data);
+                }
             }
-            
-          }).catch((err)=>{
-            console.log(err);
-          });
+        })
+        .catch((e) => { 
+          console.error(e);       
+        });
     }
 
-    const getMatchId = async (query) => {
+    const getMatchId = (query) => {
         if(query === "") return false;
-        
-        await axios({
-            method: 'get',
-            url: httpUrl.getMatchId + query,
-            withCredentials: true,
-            data: { }
-          }).then((res)=>{
-            console.log("getMatchId",res);
-            
+
+        httpGet(httpUrl.t3 + query + "/ids", {})
+        .then((res) => {
             if(res.status === 200){
-                setLeaugeData(res.data);
+                if(res.data.length ===0){
+                    setMatchId([]);
+                }else if(res.data.length > 0){
+                    setMatchId(res.data);
+                }
             }
-            
-          }).catch((err)=>{
-            console.log(err);
-          });
+        })
+        .catch((e) => { 
+          console.error(e);       
+        });
+
     }
 
-    const getMatchDetail = async (query) => {
+    const getMatchDetail = (query) => {
         if(query === "") return false;
         
-        await axios({
+         axios({
             method: 'get',
             url: httpUrl.getMatchDetail + query,
             withCredentials: true,
             data: { }
           }).then((res)=>{
-            console.log("getMatchDetail",res);
             
             if(res.status === 200){
-                setLeaugeData(res.data);
+                setMatch(res.data);
             }
             
           }).catch((err)=>{
             console.log(err);
           });
     }
-
-    
-
 
     return (
                 <div className="Summoner">
@@ -115,25 +124,33 @@ function Summoner() {
                     <div className="QueueTypes">
                     <div
                         className={`QueueType ${gameType === "Total" ? "Selected" : ""}`}
-                        onClick={(e) => {setGameType('Total')}}
+                        onClick={() => {setGameType('Total')}}
                     >
                         전체
                     </div>
                     <div
                         className={`QueueType ${gameType === "Ranked Solo" ? "Selected" : ""}`}
-                        onClick={(e) => {setGameType('Ranked Solo')}}
+                        onClick={() => {setGameType('Ranked Solo')}}
                     >
                         솔로랭크
                     </div>
                     <div    
                         className={`QueueType ${gameType === "Ranked Flex" ? "Selected" : ""}`}
-                        onClick={(e) => {setGameType('Ranked Flex')}}
+                        onClick={() => {setGameType('Ranked Flex')}}
                     >
                         자유랭크
                     </div>
                     </div>
-                    <Summary />    
-                    <GameRecordList />
+                    <Summary />
+                    {
+                        matchId.map((item,idx)=>{
+                            return(
+                                <GameRecordList key={idx} matchId={item} />
+                            )
+                        })
+                    }    
+                    
+                    
                     
                     
                 </div>

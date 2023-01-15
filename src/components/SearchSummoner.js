@@ -10,6 +10,7 @@ import { summonerState , summonerDataState} from "../atom/index";
 
 import { useNavigate } from "react-router-dom";
 
+import { httpGet } from "../util/apiClient";
 import { httpUrl } from "../util/urlMapper";
 import axios from "axios";
 
@@ -58,17 +59,11 @@ function SearchSummoner(){
         getSummoner(query,sType,copyArray);                
     }
 
-    const getSummoner = (query,sType,copyArray) => {
+    const  getSummoner =  (query,sType,copyArray) => {
         if(query === "") return false;
-        console.log(httpUrl.getSummoner + query);
-        axios({
-            method: 'get',
-            url: httpUrl.getSummoner + query,
-            withCredentials: true,
-            data: { }
-          }).then((res)=>{
-            console.log("getSummoner",res);
 
+        httpGet(httpUrl.t1 + query, {})
+        .then((res) => {
             if(res.status === 200){
                 setList((prevVal)=>({
                     ...prevVal,
@@ -77,10 +72,10 @@ function SearchSummoner(){
                 setSummoner(res.data);
                 navigate(`/summoner/userName=${query}`);
             }
-            
-          }).catch((err)=>{
-            console.log(err);
-          });
+        })
+        .catch((e) => { 
+          console.error(e);       
+        });
 
     }
 

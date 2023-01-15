@@ -1,54 +1,61 @@
 import Axios from "axios";
-import util from "util";
-import { httpUrl } from './urlMapper';
+import { httpUrl } from "./urlMapper";
+import jwt from 'jwt-decode'
 
-global.language = "ko";
-global.lanList = ["ko", "en", "ja", "zh"];
+const validateToken = (_exp) =>{
+  if (Date.now() >= _exp * 1000) {
+    return false;
+  }
+  return true;
+}
 
-const serverUrl = process.env.REACT_APP_RIOT_API_URL;
-  
-
-const makeUrl = (url, params) => {
-  var result = serverUrl + url;
-  if (params === null) return result;
-  params.forEach((param) => {
-    result = util.format(result, param);
-  });
-  
-  return result;
+const httpGet = (url, data) => {
+  return httpExec("GET", url, data);
 };
 
-const httpGet = (url, params, data) => {
-  return httpExec("GET", makeUrl(url, params), data);
+const httpPut = (url, data) => {
+  return httpExec("PUT", url, data);
 };
 
-const httpPut = (url, params, data) => {
-  return httpExec("PUT", makeUrl(url, params), data);
+const httpPost = (url, data) => {
+  return httpExec("POST", url, data);
 };
 
-const httpPost = (url, params, data) => {
-  return httpExec("POST", makeUrl(url, params), data);
-};
-
-const httpDelete = (url, params, data) => {
-  return httpExec("DELETE", makeUrl(url, params), data);
+const httpDelete = (url, data) => {
+  return httpExec("DELETE", url, data);
 };
 
 const httpExec = (method, url, data) => {
   console.log('httpExec',method,url,data);
+
   return new Promise((resolve, reject) => {
+    let Token;
+    let _header = new Object();
+        _header["Accept"] = "application/json";
+        _header["Content-Type"] = "application/json";
+        _header["X-Riot-Token"] = process.env.REACT_APP_RIOT_API_KEY;
+    if(url.indexOf("/api") !== -1 && url !== httpUrl.Login && url !== httpUrl.Register){
+      
+      if(localStorage.getItem("accessToken") !== null && !validateToken(jwt(localStorage.getItem("accessToken"))["exp"])){
+          Token = localStorage.getItem("accessToken");
+      } else if(localStorage.getItem("refreshToken") !== null && !validateToken(jwt(localStorage.getItem("refreshToken"))["exp"])){
+          Token = localStorage.getItem("refreshToken");
+      }
+      
+      _header["Authorization"] = `Bearer token code(${Token})`;
+    }
+
     Axios({
       method: method,
       url: url,
       data: data,
       withCredentials: true,
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json"
-      },
+      headers: _header,
     })
       .then((response) => {
-        resolve(response.data);
+         // setTimeout(function() {
+          resolve(response);
+         // }, 1000);
       })
       .catch((error) => {
         if (error.message.includes("401")) {
@@ -62,42 +69,10 @@ const httpExec = (method, url, data) => {
   });
 };
 
-
-
-const httpDownload = (url, params, data) => {
-  return new Promise((resolve, reject) => {
-    Axios({
-      method: "GET",
-      url: makeUrl(url, params),
-      data: data,
-      withCredentials: true,
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json"
-      },
-      responseType: "arraybuffer",
-    })
-      .then((response) => {
-        var blob = new Blob([response.data], {
-          type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-        });
-        resolve(blob);
-      })
-      .catch((error) => {
-        reject(error);
-      });
-  });
-};
-
-
 export {
-  serverUrl,
   httpExec,
-  makeUrl,
   httpGet,
-  httpUrl,
   httpPut,
   httpPost,
   httpDelete,
-  httpDownload,
 };

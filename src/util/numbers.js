@@ -7,9 +7,15 @@
  * @returns
  */
 const toFloatPrecision = (numerator, denominator, precision ) => {
-  return (
-    Math.floor((numerator * 10 ** precision) / denominator) / 10 ** precision
-  );
+
+  let returnVal = Math.floor((numerator * 10 ** precision) / denominator) / 10 ** precision;
+
+  if(isNaN(returnVal)){
+    return 0;
+  }
+
+  return returnVal;
+  
 };
 
 export { toFloatPrecision };

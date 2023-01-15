@@ -1,13 +1,13 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useReducer, useState } from "react";
 
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Pie } from "react-chartjs-2";
 
 import { colorOfKDA, colorOfScore, colorOfWinRatio } from "../util/colors";
 import { toFloatPrecision as fp } from "../util/numbers";
-import { summaryDataState  , championsDataState , summonerDataState } from "../atom/index";
+import { matchDataState, summonerDataState } from "../atom/index";
 
-import { useRecoilState } from "recoil";
+import { useRecoilValue } from "recoil";
 
 import SupImg from "../assets/mostpositions/sup.png";
 import AdcImg from "../assets/mostpositions/adc.png";
@@ -17,22 +17,76 @@ import JngImg from "../assets/mostpositions/jungle.png";
 
 
 function Summary(){
-  const [summary,setSummary] = useRecoilState(summaryDataState);
-  const [champions,setChampions] = useRecoilState(championsDataState);
-  const [positions,setPositions] = useRecoilState(summonerDataState);
+  const match = useRecoilValue(matchDataState);
+  const summonerData = useRecoilValue(summonerDataState);
+  const [total,setTotal] = useState({
+        "win" : 0,
+        "loss" : 0,
+        "kills" : 0,
+        "assists" : 0,
+        "deaths" : 0,
+        "TOP" : 0,
+        "JUG" : 0,
+        "MID" : 0,
+        "ADC" : 0,
+        "SUP" : 0,
+  });
+
+  const totalData = useCallback(()=>{
+    let win=0,loss=0,kills=0,deaths=0,assists=0,TOP=0,JUG=0,MID=0,ADC=0,SUP=0;
+    for(let x=0;x < match.length; x++){
+      for(let y=0; y < match[x].participants.length; y++){
+        if(match[x].participants[y].summonerId === summonerData.id){
+            if(match[x].participants[y].win){
+              win++;
+            }else{
+              loss++;
+            }
+
+            if(match[x].participants[y].teamPosition === "TOP"){
+              TOP++;
+            }else if(match[x].participants[y].teamPosition === "JUG"){
+              JUG++;
+            }else if(match[x].participants[y].teamPosition === "MID"){
+              MID++;
+            }else if(match[x].participants[y].teamPosition === "ADC"){
+              ADC++;
+            }else if(match[x].participants[y].teamPosition === "SUP"){
+              SUP++;
+            }
+        }
+      }
+    }
+
+    return {
+      "data" : {
+        "win" : win,
+        "loss" : loss,
+        "kills" : kills,
+        "assists" : assists,
+        "deaths" : deaths,
+        "TOP" : TOP,
+        "JUG" : JUG,
+        "MID" : MID,
+        "ADC" : ADC,
+        "SUP" : SUP,
+      }
+    }
+  },[match]);
 
   ChartJS.register(ArcElement, Tooltip, Legend);
   const chartDataFactory = useCallback(() => {
+    
     return {
       "datasets" : [
         {
-          "data" : [80, 20],
+          "data" : [total.win, total.loss],
           "backgroundColor": ["#ee5a52", "#1f8ecd"],
           "borderWidth": 0,
         },
       ],
     };
-  }, [summary]);
+  }, [match]);
 
   const positionImgFactory = (position) => {
     if (position === "ADC")
@@ -46,21 +100,13 @@ function Summary(){
     if (position === "TOP")
         return TopImg;
   };
-
-  if (
-    summary === undefined ||
-    champions === undefined ||
-    positions === undefined
-  ) {
-    return <div className="Summary" />;
-  }
-
+  
   return (
     <div className="Summary">
       <div className="OveralWinRate">
         <div className="Left">
           <div className="CurrentTwentyGames">
-            {100 + 50}G {100}W {50}L
+            {total.win + total.loss}G {total.win}W {total.loss}L
           </div>
           <div className="ChartContainer">
             <Pie
@@ -72,39 +118,39 @@ function Summary(){
               }}
             />
             <div className="CurrentWinRatio">
-              {fp(100 * 100, 100 + 50, 0)}%
+              {fp(total.win * 100, total.win + total.loss, 0)}%
             </div>
           </div>
         </div>
         <div className="Right">
           <div className="AverageKDAs">
             <div className="AverageKill">
-              {fp(200, 100 + 50)}
+              {fp(total.kills, total.win + total.loss)}
             </div>
             /
             <div className="AverageDeath">
-              {fp(50, 100 + 50)}
+            {fp(total.deaths, total.win + total.loss)}
             </div>
             /
             <div className="AverageAssist">
-              {fp(50, 100 + 50)}
+            {fp(total.assists, total.win + total.loss)}
             </div>
           </div>
           <div className="Avg">
             <div
               className={`KDARatio ${colorOfKDA(
-                (200 + 50) / 50
+                (total.kills + total.assists) / total.deaths
               )}`}
             >
-              {fp(200 + 50, 50, 2)}:1
+              {fp(total.kills + total.assists, total.deaths, 2)}:1
             </div>
             (
             <div
               className={`WinRatio ${colorOfWinRatio(
-                100 / (100 + 50)
+                total.win / (total.win + total.loss)
               )}`}
             >
-              {fp(100 * 100, 100 + 50, 0)}%
+              {fp(total.win * 100, total.win + total.loss, 0)}%
             </div>
             )
           </div>
@@ -131,14 +177,14 @@ function Summary(){
                     {fp(100 * 100, 150, 0)}%
                   </span>
                   <span className="WinLoose">
-                    (100W 50L)
+                    (0W 0L)
                   </span>
                   <span
                     className={`KDA ${colorOfScore(
-                      (100 + 20) / 50
+                      (0 + 0) / 0
                     )}`}
                   >
-                    {fp(50 + 50, 30, 2)} KDA
+                    {fp(0 + 0, 0, 0)} KDA
                   </span>
                 </div>
               </div>
@@ -165,15 +211,15 @@ function Summary(){
                 <div className="Up">Top</div>
                 <div className="Down">
                   <span className="PickRatio">
-                    {fp(100 * 100, 20, 0)}%
+                    {fp(0 * 0, 0, 0)}%
                   </span>
                   <span className="WRPrefix">Win Ratio</span>
                   <span
                     className={`WinRatio ${colorOfWinRatio(
-                      150 / 20
+                      0 / 0
                     )}`}
                   >
-                    {fp(130 * 100, 30, 0)}%
+                    {fp(0 * 0, 0, 0)}%
                   </span>
                 </div>
               </div>
@@ -185,3 +231,4 @@ function Summary(){
 };
 
 export default Summary;
+
