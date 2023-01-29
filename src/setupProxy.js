@@ -28,19 +28,18 @@ module.exports = function(app) {
   app.use(
     '/api',
     createProxyMiddleware({
-      target: process.env.REACT_APP_BACK_END_SERVER,
-      changeOrigin: true,
-      secure : false,
-
-      
+          target: process.env.REACT_APP_BACK_END_SERVER,
+          changeOrigin: true,
+          secure : false,
+          proxyTimeout: 30000,
+          onError: (err, req, res) => {
+            console.error('error in proxy', err, req, res);
+        },
+        headers: {
+          "Connection": "keep-alive"
+        },
     })
-  );
-  
-  app.use(function (err, req, res, next) {
-    console.error('Got an error!', err);
-    console.error('error Req',req)
-    res.end();
-  });
+  );  
 
-  
+
 };

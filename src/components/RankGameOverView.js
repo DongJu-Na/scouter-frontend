@@ -29,15 +29,14 @@ function RankGameOverView({rankType,data}) {
         </div>
         <div className="RankInfo">
           <div className="GameType">{data.queueType}</div>
-          <div className="PreferredPosition">top (total 27 Played)</div>
           <div className="Tier">{`${data.tier} ${data.rank}`}</div>
           <div className="Points">
-            <div className="LP">{data.leaguePoints}</div>
+            <div className="LP">{data.leaguePoints}P</div>
             <div className="WL">
               &nbsp; / {data.wins}W {data.losses}L
             </div>
           </div>
-          <div className="LeagueName">Win Ratio {winRate}%</div>
+          <div className="LeagueName">승률 {winRate}%</div>
         </div>
       </div>
     );

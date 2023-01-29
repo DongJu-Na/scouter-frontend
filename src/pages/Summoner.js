@@ -10,16 +10,14 @@ import GameRecordList from "../components/GameRecordList";
 import WinRatioSummary from "../components/WinRatioSummary";
 
 import { useRecoilState, useRecoilValue } from "recoil";
-import { summonerDataState , summonerLeagueDataState , matchDataState , matchIdDataState } from "../atom";
+import { summonerDataState , summonerLeagueDataState , matchDataState } from "../atom";
 
 import { httpGet } from "../util/apiClient";
 import { httpUrl } from "../util/urlMapper";
-import axios from "axios";
 
 function Summoner() {
     const summonerData = useRecoilValue(summonerDataState);
     const [leaugeData,setLeaugeData] = useRecoilState(summonerLeagueDataState);
-    const [matchId,setMatchId] = useRecoilState(matchIdDataState);
     const [match,setMatch] = useRecoilState(matchDataState);
 
     const [gameType , setGameType] = useState('Total');
@@ -28,26 +26,16 @@ function Summoner() {
         console.log("useEffect", summonerData);
         if(summonerData){
             getLeagueInfo(summonerData.id);
-            getMatchId(summonerData.puuid);
+            getMatchesInfo(summonerData.puuid);
         }
     },[summonerData]);
-
-    /*
-    useEffect(()=>{
-        console.log("useEffect - 2");
-            for(let x=0;x < matchId.length; x++){
-                getMatchDetail(matchId[x]);
-            }
-            console.log("match",match);
-    },[matchId]);
-    */
-    
 
     const getLeagueInfo = (query) => {
         if(query === "") return false;
 
-        httpGet(httpUrl.t2 + query, {})
+        httpGet(httpUrl.getLeagueInfo + query, {})
         .then((res) => {
+            console.log(res);
             if(res.status === 200){
                 if(res.data.length ===0){
                     setLeaugeData([]);
@@ -61,16 +49,17 @@ function Summoner() {
         });
     }
 
-    const getMatchId = (query) => {
+    const getMatchesInfo = (query) => {
         if(query === "") return false;
-
-        httpGet(httpUrl.t3 + query + "/ids", {})
+        
+        httpGet(httpUrl.getMatchesInfo + query, {})
         .then((res) => {
+            console.log(res);
             if(res.status === 200){
                 if(res.data.length ===0){
-                    setMatchId([]);
+                    setMatch([]);
                 }else if(res.data.length > 0){
-                    setMatchId(res.data);
+                    setMatch(res.data);
                 }
             }
         })
@@ -78,25 +67,6 @@ function Summoner() {
           console.error(e);       
         });
 
-    }
-
-    const getMatchDetail = (query) => {
-        if(query === "") return false;
-        
-         axios({
-            method: 'get',
-            url: httpUrl.getMatchDetail + query,
-            withCredentials: true,
-            data: { }
-          }).then((res)=>{
-            
-            if(res.status === 200){
-                setMatch(res.data);
-            }
-            
-          }).catch((err)=>{
-            console.log(err);
-          });
     }
 
     return (
@@ -119,41 +89,40 @@ function Summoner() {
                             );
                         })
                     }
-                    <WinRatioSummary />
+                    {/*<WinRatioSummary />*/}
+                    <Summary/>
                 </div>
                 <div className="RealContent">
-                    <div className="QueueTypes">
-                    <div
-                        className={`QueueType ${gameType === "Total" ? "Selected" : ""}`}
-                        onClick={() => {setGameType('Total')}}
-                    >
-                        전체
-                    </div>
-                    <div
-                        className={`QueueType ${gameType === "Ranked Solo" ? "Selected" : ""}`}
-                        onClick={() => {setGameType('Ranked Solo')}}
-                    >
-                        솔로랭크
-                    </div>
-                    <div    
-                        className={`QueueType ${gameType === "Ranked Flex" ? "Selected" : ""}`}
-                        onClick={() => {setGameType('Ranked Flex')}}
-                    >
-                        자유랭크
-                    </div>
-                    </div>
-                    <Summary />
+                   
+                            <div className="QueueTypes">
+                                <div
+                                    className={`QueueType ${gameType === "Total" ? "Selected" : ""}`}
+                                    onClick={() => {setGameType('Total')}}
+                                >
+                                    전체
+                                </div>
+                                <div
+                                    className={`QueueType ${gameType === "Ranked Solo" ? "Selected" : ""}`}
+                                    onClick={() => {setGameType('Ranked Solo')}}
+                                >
+                                    솔로랭크
+                                </div>
+                                <div    
+                                    className={`QueueType ${gameType === "Ranked Flex" ? "Selected" : ""}`}
+                                    onClick={() => {setGameType('Ranked Flex')}}
+                                >
+                                    자유랭크
+                                </div>
+                            </div>   
+                    
+                    
                     {
-                        matchId.map((item,idx)=>{
+                        match.map((item,idx)=>{
                             return(
-                                <GameRecordList key={idx} matchId={item} />
+                                <GameRecordList key={idx} matchData={item} />
                             )
                         })
                     }    
-                    
-                    
-                    
-                    
                 </div>
                 </main>
 

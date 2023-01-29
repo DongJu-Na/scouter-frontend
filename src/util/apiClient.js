@@ -33,7 +33,8 @@ const httpExec = (method, url, data) => {
     let _header = new Object();
         _header["Accept"] = "application/json";
         _header["Content-Type"] = "application/json";
-        _header["X-Riot-Token"] = process.env.REACT_APP_RIOT_API_KEY;
+    //    _header["X-Riot-Token"] = process.env.REACT_APP_RIOT_API_KEY;
+    /*
     if(url.indexOf("/api") !== -1 && url !== httpUrl.Login && url !== httpUrl.Register){
       
       if(localStorage.getItem("accessToken") !== null && !validateToken(jwt(localStorage.getItem("accessToken"))["exp"])){
@@ -44,6 +45,7 @@ const httpExec = (method, url, data) => {
       
       _header["Authorization"] = `Bearer token code(${Token})`;
     }
+    */
 
     Axios({
       method: method,

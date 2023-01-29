@@ -19,6 +19,6 @@ export const httpUrl = {
     getMatchId : "/api/lol/getMatchId/", // 경기ID 조회
     getMatchDetail : "/api/lol/getMatchDetail/", // 경기상세정보 조회
     getMatchTimeLine : "/api/lol/getMatchTimeLine/", // 경기타임라인 조회
-    
+    getMatchesInfo : "/api/lol/getMatchesInfo/" // 최근20경기조회
 };
 

@@ -1,23 +1,31 @@
-import React, { useEffect } from "react";
+import React from "react";
+
+import { useRecoilValue } from "recoil";
+import { summonerDataState } from "../atom";
 
 import GameRecord from "./GameRecord";
 
 
-function GameRecordList({matchId}){
+function GameRecordList({matchData}){
+  const summonerData = useRecoilValue(summonerDataState);  
+  let returnVal;
 
-    useEffect(()=>{
-      console.log("GameRecordList > " + matchId);
-    },[])
-
-  if(matchId === undefined || matchId === null){
+  if(matchData === undefined || matchData === null){
     return false;
   }
-  
+
+  for(let x=0; x < matchData.info.participants.length ; x++){
+    if(summonerData.id === matchData.info.participants[x].summonerId){
+        returnVal = matchData.info.participants[x];
+      break;
+    }
+  }
 
   return (
     <div className="GameRecords">
       
-        <GameRecord
+        <GameRecord matchData={matchData}
+                    myInfoData={returnVal}
         />
       
     </div>

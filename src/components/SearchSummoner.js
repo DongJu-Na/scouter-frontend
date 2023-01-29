@@ -6,13 +6,12 @@ import {StarIcon , CloseIcon} from "../assets/svgIcon"
 import useOnClickOutside from "../util/useOnClickOutside";
 
 import { useRecoilState, useSetRecoilState } from "recoil";
-import { summonerState , summonerDataState} from "../atom/index";
+import { summonerState , summonerDataState, matchDataState, summonerLeagueDataState} from "../atom/index";
 
 import { useNavigate } from "react-router-dom";
 
 import { httpGet } from "../util/apiClient";
 import { httpUrl } from "../util/urlMapper";
-import axios from "axios";
 
 function SearchSummoner(){
     const wrapperRef = useRef(null);
@@ -21,6 +20,8 @@ function SearchSummoner(){
     const [tabKey, setTabKey] = useState("recent");
     const [list , setList] = useRecoilState(summonerState);
     const setSummoner = useSetRecoilState(summonerDataState);
+    const setMatch = useSetRecoilState(matchDataState);
+    const setLeaugeData = useSetRecoilState(summonerLeagueDataState);
 
     const navigate = useNavigate();
     
@@ -62,13 +63,15 @@ function SearchSummoner(){
     const  getSummoner =  (query,sType,copyArray) => {
         if(query === "") return false;
 
-        httpGet(httpUrl.t1 + query, {})
+        httpGet(httpUrl.getSummoner + query, {})
         .then((res) => {
             if(res.status === 200){
                 setList((prevVal)=>({
                     ...prevVal,
                     [sType] :  copyArray
                 }));
+                setMatch([]);
+                setLeaugeData([]);
                 setSummoner(res.data);
                 navigate(`/summoner/userName=${query}`);
             }

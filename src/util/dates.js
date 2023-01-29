@@ -4,27 +4,31 @@
  * @returns {String}
  */
 const getTimeAgoString = (createDate)  => {
-  const today = new Date();
-  const backThen = new Date(createDate * 1000);
-
-  const diff = today.getTime() - backThen.getTime();
-  const diffTime = diff / (1000 * 60 * 60);
-
-  if (diffTime < 1) {
-    const diffMin = Math.ceil(diffTime / 60);
-    if (diffMin === 1) return `a minute ago`;
-    return `${diffMin} mins ago`;
+  if(createDate === null || createDate === "" || createDate === undefined){
+    return "";
   }
+  const start = new Date(createDate);
+  const end = new Date(); // 현재 날짜
 
-  if (diffTime < 24) {
-    if (Math.ceil(diffTime) === 1) return `an hour ago`;
-    return `${Math.ceil(diffTime)} hours ago`;
+  const diff = (end - start); // 경과 시간
+ 
+  const times = [
+    {time: "분", milliSeconds: 1000 * 60},
+    {time: "시간", milliSeconds: 1000 * 60 * 60},
+    {time: "일", milliSeconds: 1000 * 60 * 60 * 24},
+    {time: "개월", milliSeconds: 1000 * 60 * 60 * 24 * 30},
+    {time: "년", milliSeconds: 1000 * 60 * 60 * 24 * 365},
+  ].reverse();
+  
+  for (const value of times) {
+    const betweenTime = Math.floor(diff / value.milliSeconds);
+    
+    if (betweenTime > 0) {
+      return `${betweenTime}${value.time}전`;
+    }
   }
-  if (diffTime < 48) {
-    return "Yesterday";
-  }
-
-  return `${Math.round(diffTime / 24)} days ago`;
+  
+  return "방금 전";
 };
 
-export { getTimeAgoString };
+export default { getTimeAgoString };
