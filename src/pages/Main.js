@@ -1,23 +1,12 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import logo from "../assets/logo.png";
 import  SearchSummoner from "../components/SearchSummoner";
 
 function Main(){
-    const navigate = useNavigate();
-
 
     return (
-            <>
-                {
-                    /* 
-                        <div className="loginArea" onClick={()=>{navigate("/login")}}>
-                            로그인
-                        </div>                    
-                    */
-                }
-                
+            <>                
                 <div className="Main">
                     <Header />
                     <img className="BannerImg" src={logo} alt="로고" />
