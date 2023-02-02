@@ -27,7 +27,7 @@ function Summary(){
     return {
       "datasets" : [
         {
-          "data" : [stat.win, stat.loss],
+          "data" : [stat.loss, stat.win],
           "backgroundColor": ["#ee5a52", "#1f8ecd"],
           "borderWidth": 0,
         },
