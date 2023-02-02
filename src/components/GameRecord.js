@@ -92,11 +92,32 @@ const PlayerStick  = ({imageUrl,summonerName}) => {
     </div>
   );
 };
-
+const returnObj = {
+  code : "",
+  text : "",
+  color : ""
+};
 const MemoTeamLists = React.memo(TeamLists);
+const ParseWin = (_win , _gameDuration) => {
+    if(_gameDuration <  195){
+      returnObj.code = 'remake';
+      returnObj.msg = '다시하기';
+      returnObj.color = "rgb(172 192 193)";
+    }else if(_win){
+      returnObj.code = 'victory';
+      returnObj.msg = '승리';
+      returnObj.color = "rgb(125, 160, 227)";
+    }else if(!_win){
+      returnObj.code = 'defeat';
+      returnObj.msg = '패배';
+      returnObj.color = "rgb(217 149 146)";
+    }
+          
+  return returnObj;
+}
 
 const GameRecord = ({matchData,myInfoData}) => {
-  const vd =  myInfoData.win ? "victory" : "defeat";
+  const vd =  ParseWin(myInfoData.win,matchData.info.gameDuration);  
   
   const qType = (_q) =>{
     let returnVal;
@@ -174,6 +195,7 @@ const GameRecord = ({matchData,myInfoData}) => {
   }
 
   const ItemWrapper = (_code,_num) => {
+
     if(_code === undefined || _code === null || _code === "0" || _code === 0) {
       return (
         <div className="ItemWrapper">
@@ -182,7 +204,7 @@ const GameRecord = ({matchData,myInfoData}) => {
                             "height" : "20px",
                             "objectFit" : "fill",
                             "borderRadius" : "5px",
-                            "backgroundColor" : myInfoData.win ?  "rgb(125, 160, 227)" : "rgb(217 149 146)"
+                            "backgroundColor" : returnObj.color
                              }}
     ></div>
         </div>
@@ -283,7 +305,7 @@ const GameRecord = ({matchData,myInfoData}) => {
         {time: "분", milliSeconds: 1000 * 60},
         {time: "시간", milliSeconds: 1000 * 60 * 60},
         {time: "일", milliSeconds: 1000 * 60 * 60 * 24},
-        {time: "개월", milliSeconds: 1000 * 60 * 60 * 24 * 30},
+        {time: "달", milliSeconds: 1000 * 60 * 60 * 24 * 30},
         {time: "년", milliSeconds: 1000 * 60 * 60 * 24 * 365},
       ].reverse();
   
@@ -291,7 +313,7 @@ const GameRecord = ({matchData,myInfoData}) => {
         const betweenTime = Math.floor(diff / value.milliSeconds);
         
         if (betweenTime > 0) {
-           return `${betweenTime}${value.time}전`;
+           return `${betweenTime}${value.time} 전`;
         }
       }
       return "방금 전";
@@ -306,12 +328,12 @@ const GameRecord = ({matchData,myInfoData}) => {
   
 
   return (
-    <div className={`GameRecord ${vd}`}>
+    <div className={`GameRecord ${vd.code}`}>
       <div className="GR1">
         <div className="GameType">{qType(matchData.info.queueId)}</div>
         <span className="TimeAgo">{getTime(matchData.info.gameStartTimestamp)}</span>
         <div className="Divider"></div>
-        <div className={`Outcome ${vd}`}>{vd}</div>
+        <div className={`Outcome ${vd.code}`}>{vd.msg}</div>
         <div className="PlayTime">
           { Math.floor(matchData.info.gameDuration / 60) }분 { Math.floor(matchData.info.gameDuration % 60 ) }초
         </div>
@@ -356,13 +378,17 @@ const GameRecord = ({matchData,myInfoData}) => {
       <div className="GR4">
         <div className="Level">{`level ${myInfoData.champLevel}`}</div>
         <div className="CS">
-          {myInfoData.totalMinionsKilled + myInfoData.neutralMinionsKilled} ({ 0 }) CS
+          {myInfoData.totalMinionsKilled + myInfoData.neutralMinionsKilled} ({ ((myInfoData.totalMinionsKilled + myInfoData.neutralMinionsKilled) / (matchData.info.gameDuration / 60)).toFixed(1) }) CS
         </div>
         <div className="PKill">
           P/Kill
         </div>
-            <div className="TierAverage">Tier Average</div>
-            <div className="Tier"></div>
+            {
+              /* 
+                <div className="TierAverage">평균티어</div>
+                <div className="Tier"></div>  
+              */
+            }
       </div>
       <div className="GR5">
 

@@ -21,10 +21,12 @@ function Summoner() {
     const [match,setMatch] = useRecoilState(matchDataState);
 
     const [gameType , setGameType] = useState('Total');
+    const [gameCnt , setGameCnt] = useState(0);
 
     useEffect(()=>{
         console.log("useEffect", summonerData);
         if(summonerData){
+            setGameCnt(0);
             getLeagueInfo(summonerData.id);
             getMatchesInfo(summonerData.puuid);
         }
@@ -117,12 +119,20 @@ function Summoner() {
                     
                     
                     {
-                        match.map((item,idx)=>{
-                            return(
-                                <GameRecordList key={idx} matchData={item} />
-                            )
-                        })
-                    }    
+                        match.length > 0 ? 
+                        <>{
+                            match.map((item,idx)=>{
+                                return(
+                                    <GameRecordList key={idx} matchData={item} />
+                                    )
+                                })
+                            }              
+                            <button className="more">더 보기</button>
+                        </>
+                        :
+                        <></>
+                    }
+
                 </div>
                 </main>
 
