@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 
 const Headers = () => {
-
+  const [auth,setAuth] = useState(sessionStorage.getItem("accessTokenExpirationTime"));
   const logout = () => {
     const swalWithBootstrapButtons = Swal.mixin({
       customClass: {
@@ -14,7 +14,7 @@ const Headers = () => {
     })
     
     swalWithBootstrapButtons.fire({
-      title: '경고',
+      title: '알림',
       text: "로그아웃 하시겠습니까?",
       icon: 'warning',
       showCancelButton: true,
@@ -30,6 +30,7 @@ const Headers = () => {
         )
         localStorage.clear();
         sessionStorage.clear();
+        setAuth(null);
       } else if (
         result.dismiss === Swal.DismissReason.cancel
       ) {
@@ -43,9 +44,7 @@ const Headers = () => {
   };
 
   const authCheck = ()=> {
-    const sessionTime = sessionStorage.getItem("accessTokenExpirationTime");
-
-    if(sessionTime === null || sessionTime === undefined){
+    if(auth === null || auth === undefined){
       return(
         <Link to="/login">로그인</Link>
        );
