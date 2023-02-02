@@ -1,24 +1,63 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const Headers = () => {
+
   const logout = () => {
-    if (window.confirm("로그아웃 하시겠습니까?") == true) {
-      localStorage.clear();
-      console.log(localStorage.getItem("jwtToken"));
-    } else {
-      return false;
-    }
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: 'btn btn-success',
+        cancelButton: 'btn btn-danger'
+      },
+      buttonsStyling: false
+    })
+    
+    swalWithBootstrapButtons.fire({
+      title: '경고',
+      text: "로그아웃 하시겠습니까?",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: '네',
+      cancelButtonText: '취소',
+      reverseButtons: true
+    }).then((result) => {
+      if (result.isConfirmed) {
+        swalWithBootstrapButtons.fire(
+          '알림',
+          '로그아웃 처리 되었습니다.',
+          'success'
+        )
+        localStorage.clear();
+        sessionStorage.clear();
+      } else if (
+        result.dismiss === Swal.DismissReason.cancel
+      ) {
+        swalWithBootstrapButtons.fire(
+          '알림',
+          '취소 처리 되었습니다.',
+          'error'
+        )
+      }
+    })
   };
 
-  const authCheck = localStorage.getItem("jwtToken") ? (
-    <Link to="/#" onClick={logout}>
-      {" "}
-      로그아웃{" "}
-    </Link>
-  ) : (
-    <Link to="/login">로그인</Link>
-  );
+  const authCheck = ()=> {
+    const sessionTime = sessionStorage.getItem("accessTokenExpirationTime");
+
+    if(sessionTime === null || sessionTime === undefined){
+      return(
+        <Link to="/login">로그인</Link>
+       );
+    }else{
+      return(
+        <Link to="/#" onClick={logout}>
+        로그아웃
+        </Link>
+       );
+    }
+    
+  }
 
   return (
     <div className="header1">
@@ -35,7 +74,7 @@ const Headers = () => {
           <li className="menu__item1">
             <Link to="/community">커뮤니티</Link>
           </li>
-          <li className="menu__item1">{authCheck}</li>
+          <li className="menu__item1">{authCheck()}</li>
         </ul>
       </div>
     </div>

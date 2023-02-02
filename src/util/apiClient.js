@@ -1,6 +1,6 @@
 import Axios from "axios";
 import { httpUrl } from "./urlMapper";
-import jwt from 'jwt-decode'
+import jwt from 'jwt-decode';
 
 const validateToken = (_exp) =>{
   if (Date.now() >= _exp * 1000) {

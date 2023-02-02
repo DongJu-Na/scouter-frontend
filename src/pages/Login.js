@@ -30,10 +30,11 @@ function Login(){
         "password" : inputRef.current[1].value,
       })
       .then((res) => {
-        if(res.status === 200){
-          localStorage.setItem("accessToken","");
-          localStorage.setItem("refreshToken","");
-          //sessionStorage.setItem("loginInfo",)
+        console.log(res);
+        if(res.status === 201){
+          localStorage.setItem("accessToken",res.data.data.access_token);
+          localStorage.setItem("refreshToken",res.data.data.refresh_token);
+          sessionStorage.setItem("accessTokenExpirationTime",res.data.data.accessTokenExpirationTime);
           navigate("/");
         }
       })
