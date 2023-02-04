@@ -96,7 +96,7 @@ function Login(){
         <div className="Auth-form-container">
           <form className="Auth-form"  action='' method='' onSubmit={loginFn}>
             <div className="Auth-form-content">
-              <h3 className="Auth-form-title">Scouter</h3>
+              <h3 className="Auth-form-title cursorP" onClick={()=>navigate("/")}>Scouter</h3>
               <div className="text-center">
           
               </div>
