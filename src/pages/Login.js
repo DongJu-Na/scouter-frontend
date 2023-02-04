@@ -1,14 +1,24 @@
-import React , { useRef, useState } from "react";
+import React , { useEffect, useRef, useState } from "react";
 import { httpPost } from "../util/apiClient";
 import { httpUrl } from "../util/urlMapper";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
-
+import jwt from 'jwt-decode';
 
 function Login(){
     const [authMode, setAuthMode] = useState("signin");
     const inputRef = useRef([]);
     const navigate = useNavigate();
+    const [check,setCheck] = useState(false);
+    const [email, setEmail] = useState("");
+
+    useEffect(()=>{
+      if (localStorage.getItem("email") !== null) {
+        setEmail(localStorage.getItem("email"));
+        setCheck(true);
+      }
+    },[])
+
 
     const changeAuthMode = () => {
       setAuthMode(authMode === "signin" ? "signup" : "signin")
@@ -32,14 +42,28 @@ function Login(){
       .then((res) => {
         console.log(res);
         if(res.status === 201){
-          localStorage.setItem("accessToken",res.data.data.access_token);
-          localStorage.setItem("refreshToken",res.data.data.refresh_token);
+
+          if(check){
+            localStorage.setItem("email",email);
+          }else{
+            localStorage.removeItem("email");
+          }
+          
+          const resultObj = jwt(res.data.data.access_token);
+          sessionStorage.setItem("email",resultObj["sub"]);
+          sessionStorage.setItem("nickName",resultObj["NICK_NAME"]);
+          sessionStorage.setItem("accessToken",res.data.data.access_token);
+          sessionStorage.setItem("refreshToken",res.data.data.refresh_token);
           sessionStorage.setItem("accessTokenExpirationTime",res.data.data.accessTokenExpirationTime);
           navigate("/");
         }
       })
-      .catch(() => { 
-        Swal.fire('처리 중 오류가 발생하였습니다.');
+      .catch((err) => { 
+        const errMsg = err.response.data.message;
+        if(errMsg === null || errMsg === undefined){
+          errMsg = "처리 중 오류가 발생하였습니다."; 
+        }
+        Swal.fire(errMsg);
       });
     }
 
@@ -52,13 +76,17 @@ function Login(){
       })
       .then((res) => {
         console.log(res);
-        if(res.status === 200){
-          Swal.fire('처리 중 오류가 발생하였습니다.');
+        if(res.status === 201){
+          Swal.fire('회원가입 되었습니다. 로그인 후 이용 하세요.');
           setAuthMode("signin");
         }
       })
-      .catch((e) => { 
-        Swal.fire('처리 중 오류가 발생하였습니다.');
+      .catch((err) => { 
+        const errMsg = err.response.data.message;
+        if(errMsg === null || errMsg === undefined){
+          errMsg = "처리 중 오류가 발생하였습니다."; 
+        }
+        Swal.fire(errMsg);
       });
     }
 
@@ -85,6 +113,10 @@ function Login(){
                       loginFn()
                     }
                   }}
+                  onChange={(e) => {
+                    setEmail(e.target.value)
+                  }}
+                  value={email}
                 />
               </div>
               <div className="form-group mt-3">
@@ -103,6 +135,18 @@ function Login(){
                 />
               </div>
               <div className="d-grid gap-2 mt-3">
+                <div className="form-check form-check-inline">
+                  <input className="form-check-input" 
+                          type="checkbox" 
+                          id="flexCheckDefault"
+                          onChange={(e)=>{ setCheck(e.target.checked)}}
+                          checked={check ? check : false}
+                  />
+                  <label className="form-check-label" htmlFor="flexCheckDefault">
+                    아이디 기억
+                  </label>
+                </div>
+
                 <button type="button" className="btn btn-primary" onClick={loginFn}>
                   로그인
                 </button>
@@ -161,7 +205,7 @@ function Login(){
                 ref={el => inputRef.current[4] = el}
               />
             </div>
-            <div className="d-grid gap-2 mt-3">
+            <div className="d-grid gap-2 mt-3">              
               <button type="button" className="btn btn-primary" onClick={()=>registerFn()}>
                 회원가입
               </button>

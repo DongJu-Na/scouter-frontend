@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import logo from "../assets/logo.png";
+import SearchSummoner from "./SearchSummoner";
 
 const MainForm = ({ history }) => {
   const [username, setUsername] = useState("");
@@ -20,24 +22,16 @@ const MainForm = ({ history }) => {
         <div className="icon-form">
           <img
             className="community-icon"
-            src="/img/communityIcon.png"
+            src={logo}
             alt="아이콘"
           />
-          <div className="icon-text">리그오브레전드</div>
+          <div className="icon-text"></div>
         </div>
       </Link>
-      <div className="SearchForm">
-        <form onSubmit={handleOnSubmit}>
-          <input
-            onChange={handleOnChange}
-            type="text"
-            className="main-input"
-            placeholder="소환사명..."
-          />
-          <button className="mainBtn" type="submit">
-            <img className="btnImg" src="/img/searchBtn.gif" alt="검색" />
-          </button>
-        </form>
+      <div className="SearchBar">
+        <div className="SearchInputContainer">
+          <SearchSummoner />
+        </div>
       </div>
     </div>
   );

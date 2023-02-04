@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
 const Headers = () => {
   const [auth,setAuth] = useState(sessionStorage.getItem("accessTokenExpirationTime"));
+  const navigate = useNavigate();
   const logout = () => {
     const swalWithBootstrapButtons = Swal.mixin({
       customClass: {
@@ -28,7 +29,6 @@ const Headers = () => {
           '로그아웃 처리 되었습니다.',
           'success'
         )
-        localStorage.clear();
         sessionStorage.clear();
         setAuth(null);
       } else if (
@@ -46,13 +46,11 @@ const Headers = () => {
   const authCheck = ()=> {
     if(auth === null || auth === undefined){
       return(
-        <Link to="/login">로그인</Link>
+        <a href="#!" onClick={()=>navigate("/login")}>로그인</a>
        );
     }else{
       return(
-        <Link to="/#" onClick={logout}>
-        로그아웃
-        </Link>
+        <a href="#!" onClick={()=>logout()}>로그아웃</a>
        );
     }
     

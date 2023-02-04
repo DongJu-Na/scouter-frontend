@@ -6,6 +6,7 @@ import Summoner  from './pages/Summoner';
 import Login from "./pages/Login";
 import Ranking from "./pages/Ranking";
 import Community from "./pages/Community";
+import CommunityDetail from "./pages/CommunityDetail";
 
 function App() {
 
@@ -16,6 +17,7 @@ function App() {
             <Route exact path="/summoner/:userName" element={<Summoner/>} />
             <Route exact path="/ranking" element={<Ranking/>} />
             <Route exact path="/community" element={<Community/>} />
+            <Route exact path="/community/:id" element={<CommunityDetail/>} />
         </Routes>
   );
 }

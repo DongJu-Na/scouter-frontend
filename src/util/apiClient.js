@@ -3,7 +3,7 @@ import { httpUrl } from "./urlMapper";
 import jwt from 'jwt-decode';
 
 const validateToken = (_exp) =>{
-  if (Date.now() >= _exp * 1000) {
+  if (Date.now() >= (_exp * 1000)) {
     return false;
   }
   return true;
@@ -30,22 +30,23 @@ const httpExec = (method, url, data) => {
 
   return new Promise((resolve, reject) => {
     let Token;
-    let _header = new Object();
+    let _header = {};
         _header["Accept"] = "application/json";
         _header["Content-Type"] = "application/json";
-    //    _header["X-Riot-Token"] = process.env.REACT_APP_RIOT_API_KEY;
-    /*
-    if(url.indexOf("/api") !== -1 && url !== httpUrl.Login && url !== httpUrl.Register){
-      
-      if(localStorage.getItem("accessToken") !== null && !validateToken(jwt(localStorage.getItem("accessToken"))["exp"])){
-          Token = localStorage.getItem("accessToken");
-      } else if(localStorage.getItem("refreshToken") !== null && !validateToken(jwt(localStorage.getItem("refreshToken"))["exp"])){
-          Token = localStorage.getItem("refreshToken");
+    
+    if(url.indexOf("/lol") === -1 && url !== httpUrl.Login 
+      && url !== httpUrl.Register && url !== httpUrl.getBoard 
+      && url !== httpUrl.getBoardDetail && url !== httpUrl.getReplys ){
+      if(sessionStorage.getItem("accessToken") !== null && validateToken(jwt(sessionStorage.getItem("accessToken"))["exp"])){
+          Token = sessionStorage.getItem("accessToken");
+      } else if(sessionStorage.getItem("refreshToken") !== null && validateToken(jwt(sessionStorage.getItem("refreshToken"))["exp"])){
+          Token = sessionStorage.getItem("refreshToken");
       }
-      
-      _header["Authorization"] = `Bearer token code(${Token})`;
+
+      if(Token !== undefined && Token !== null)
+      _header["Authorization"] = `Bearer ${Token}`;
     }
-    */
+    
 
     Axios({
       method: method,

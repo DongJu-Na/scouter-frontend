@@ -6,27 +6,32 @@ import { Link } from "react-router-dom";
 
 import MainForm from "../components/MainForm";
 
-const Community = () => {
+import { httpGet } from "../util/apiClient";
+import { httpUrl } from "../util/urlMapper";
+import { useRecoilState } from "recoil";
+import { BoardState } from "../atom";
 
-  const [communityDtos, setCommunityDtos] = useState([]);
+const Community = () => {
+  const [board,setBoard] = useRecoilState(BoardState);
   const [postPage, setPostPage] = useState(0);
   const [statusCode, setStatusCode] = useState(0);
   const [inputValue, setInputValue] = useState("");
 
   useEffect(() => {
-
+    getBoard(0);
   }, []);
 
   const handlePrevPage = () => {
     let prevPage = postPage - 1;
-    if (postPage < 0) {
+    if (postPage === 0) {
       return;
     }
+    getBoard(prevPage);
   };
 
   const handleNextPage = () => {
     let nextPage = postPage + 1;
-
+    getBoard(nextPage);
   };
 
   const handleOnSubmit = (e) => {
@@ -40,6 +45,22 @@ const Community = () => {
     setTimeout(400);
   };
 
+  const getBoard = (_page) => {
+      httpGet(httpUrl.getBoard + `&size=5&page=${_page}`, {})
+      .then((res) => {
+          console.log(res);
+          if(res.status === 200){
+            console.log(res.data.data);
+            setBoard(res.data.data);
+            setPostPage(res.data.data.page);
+          }
+      })
+      .catch((e) => { 
+        console.error(e);       
+      });
+  }
+
+
   return (
     <div>
       <div className="community">
@@ -50,10 +71,10 @@ const Community = () => {
           <div className="contentBox">
             <div className="content-header">
               <div className="content-header-wrap">
-                <h2 className="header-text">게시글</h2>
+                <h2 className="header-text">자유게시판</h2>
                 <div style={{ marginRight: "24px" }}>
-                  {localStorage.getItem("jwtToken") !== null &&
-                    localStorage.getItem("jwtToken") !== undefined && (
+                  {sessionStorage.getItem("accessToken") !== null &&
+                    sessionStorage.getItem("accessToken") !== undefined && (
                       <Link to="/write">
                         <img
                           src="img/iconWrite.png"
@@ -95,10 +116,10 @@ const Community = () => {
 
             <div className="article-list">
               {/* 여기서 부터 반복 */}
-              {communityDtos.map(
-                (communityDto) =>
-                  communityDto.type === 1 && (
-                    <div className="article-box" key={communityDto.post.id}>
+              { board !== [] && board.content !== null && board.content !== undefined ?
+                board.content.map((item,idx) =>
+                  {return(
+                    <div className="article-box" key={`board${item.boardId}_${idx}`}>
                       <div
                         className="article-item"
                         style={{ display: "contents" }}
@@ -107,22 +128,23 @@ const Community = () => {
                           className="article-number"
                           style={{ alignSelf: "center", width: "72px" }}
                         >
-                          {communityDto.post.id}
+                          {item.boardId}
                         </div>
                         <div
                           className="article-list-item__content"
                           style={{ alignSelf: "center" }}
                         >
                           <Link
-                            to={"/community/" + communityDto.post.id}
-                            style={{ cursor: "pointer" }}
+                            to={"/community/" + item.boardId}
+                            state={{ boardId : item.boardId }}
+                            style={{ cursor: "pointer" , textDecoration: 'none'}}
                           >
                             <div
                               className="aritcle-list-item__title"
                               style={{ textAlign: "left" }}
                             >
                               <span className="post-title">
-                                {communityDto.post.title}
+                                {item.boardTitle}
                               </span>
                               <em
                                 style={{
@@ -130,27 +152,33 @@ const Community = () => {
                                   fontStyle: "normal",
                                 }}
                               >
-                                [{communityDto.post.replies.length}]
+                                [{item.replyCount}]
                               </em>
                             </div>
                           </Link>
                           <div className="article-list-item-meta">
                             <div className="article-list-item-meta__item">
                               <span style={{ color: "#98a0a7" }}>
-                                {/*moment(communityDto.post.createDate)
-                                  .startOf("second")
-                              .fromNow()*/}
+                                {item.createdDt}
                               </span>
                               <span className="article-list-author">
-                                {communityDto.post.user.nickname}
+                                {item.boardUserNickName}
                               </span>
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                  )
-              )}
+                  )}
+              )
+              :
+              <div className="article-box">
+                    <div
+                        className="article-item"
+                        style={{ display: "contents" }}>작성된 글이 없습니다.
+                  </div>
+              </div>
+              }
 
               <div>
                 <div className="article-list-paging">
@@ -204,9 +232,9 @@ const Community = () => {
                 </div>
               </div>
             </div>
-            <Footer />
           </div>
         </div>
+        <Footer />
       </div>
     </div>
   );

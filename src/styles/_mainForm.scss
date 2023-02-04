@@ -5,6 +5,20 @@
   text-align: center;
   justify-content: space-between;
 
+  .SearchBar .SearchInputContainer{
+    position: relative;
+    right: 1rem;
+    top: 3rem;
+    width: 260px;
+    height: 32px;
+    margin-right: 1rem;
+  }
+
+  .community-icon{
+    width: 200px;
+    height: 163px;
+  }
+
   .icon-form {
     margin-left: 30px;
     justify-content: flex-start;
@@ -47,6 +61,7 @@
       margin-right: 15px;
       position: absolute;
       background: none;
+      border: 0;
     }
   }
 }
