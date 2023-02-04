@@ -37,7 +37,6 @@ function Summoner() {
 
         httpGet(httpUrl.getLeagueInfo + query, {})
         .then((res) => {
-            console.log(res);
             if(res.status === 200){
                 if(res.data.length ===0){
                     setLeaugeData([]);
@@ -56,7 +55,6 @@ function Summoner() {
         
         httpGet(httpUrl.getMatchesInfo + query, {})
         .then((res) => {
-            console.log(res);
             if(res.status === 200){
                 if(res.data.length ===0){
                     setMatch([]);

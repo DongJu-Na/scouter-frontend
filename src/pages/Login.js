@@ -40,9 +40,7 @@ function Login(){
         "password" : inputRef.current[1].value,
       })
       .then((res) => {
-        console.log(res);
         if(res.status === 201){
-
           if(check){
             localStorage.setItem("email",email);
           }else{
