@@ -1,5 +1,6 @@
-![image](https://user-images.githubusercontent.com/79893048/210140903-44abeb6c-88d2-4047-90ec-1a26d404ddb6.png)
-![image](https://user-images.githubusercontent.com/79893048/215329281-7f6f2439-5d2e-45ab-b884-fc032ca9c962.png)
+![image](https://user-images.githubusercontent.com/79893048/216769995-7a0352a2-32bd-4a37-980c-58de791ccab2.png)
+![image](https://user-images.githubusercontent.com/79893048/216770017-b3dbbf0b-5ff6-45ec-a0f7-8b76f3f540e7.png)
+
 <br>
 # Scouter-frontend
 🤭스카우터 프로젝트 - 프론트
