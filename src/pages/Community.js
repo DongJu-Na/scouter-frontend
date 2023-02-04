@@ -40,7 +40,6 @@ const Community = () => {
   };
 
   const handleOnChange = (e) => {
-    console.log(1, inputValue);
     setInputValue(e.target.value);
     setTimeout(400);
   };
@@ -48,9 +47,7 @@ const Community = () => {
   const getBoard = (_page) => {
       httpGet(httpUrl.getBoard + `&size=5&page=${_page}`, {})
       .then((res) => {
-          console.log(res);
           if(res.status === 200){
-            console.log(res.data.data);
             setBoard(res.data.data);
             setPostPage(res.data.data.page);
           }
