@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
 import Headers from "../components/Header";
 import MainForm from "../components/MainForm";
@@ -8,6 +8,7 @@ import { httpUrl } from "../util/urlMapper";
 import Swal from "sweetalert2";
 
 const CommunityDetail = () => {
+  const navigate = useNavigate();
   const [replies, setReplies] = useState([]);
   const [reply, setReply] = useState([]);
   const [resp, setResp] = useState({});
@@ -22,7 +23,7 @@ const CommunityDetail = () => {
 
   useEffect(() => {
     if(refreshFlag){
-      getReplys(location.state.boardId);
+      getReplys(location.state.boardId,0);
       setRefreshFlag(false);
     }
   },[refreshFlag]);
@@ -40,7 +41,7 @@ const CommunityDetail = () => {
     httpGet(httpUrl.getBoardDetail + _boardId, {})
     .then((res) => {
         setResp(res.data);
-        getReplys(_boardId);
+        getReplys(_boardId,0);
     })
     .catch((e) => { 
       console.error(e);       
@@ -59,7 +60,7 @@ const CommunityDetail = () => {
     
     swalWithBootstrapButtons.fire({
       title: '알림',
-      text: "작성한 댓글을 삭제 하시겠습니까?",
+      text: "작성한 게시물을 삭제 하시겠습니까?",
       icon: 'warning',
       showCancelButton: true,
       confirmButtonText: '네',
@@ -75,7 +76,7 @@ const CommunityDetail = () => {
         httpDelete(httpUrl.deleteBoard + _boardId, {})
         .then((res) => {
           if(res.status === 201){
-            setRefreshFlag(true);
+            navigate(-1);
           }
         })
         .catch((e) => { 
@@ -94,8 +95,8 @@ const CommunityDetail = () => {
 
   }
 
-  const getReplys = (_boardId) => {
-    httpGet(httpUrl.getReplys + _boardId + `&size=10&page=${postPage}`, {})
+  const getReplys = (_boardId , _page) => {
+    httpGet(httpUrl.getReplys + _boardId + `&size=10&page=${_page}`, {})
     .then((res) => {
         if(res.status === 200)
            setReplies(res.data);
@@ -144,23 +145,21 @@ const CommunityDetail = () => {
   }
 
   const handlePrevPage = () => {
-    if(replies.data.first || replies.data.first !== undefined){
-      return false;
-    }
-
+    let prevPage = postPage - 1;
     if (postPage === 0) {
       return false;
     }
     setPostPage(postPage-1);
-    getReplys(location.state.boardId);
+    getReplys(location.state.boardId,prevPage);
   };
 
   const handleNextPage = () => {
+    let nextPage = postPage + 1;
     if(replies.data.last){
       return false;
     }
     setPostPage(postPage+1);
-    getReplys(location.state.boardId);
+    getReplys(location.state.boardId,nextPage);
   };
 
   return (
@@ -196,7 +195,7 @@ const CommunityDetail = () => {
                               <span>조회 {resp.data.boardViewCnt}</span>
                             </div>
                             <div className="article-meta__item">
-                              <span>댓글 {0}</span>
+                              <span>댓글 {resp.data.replyCount}</span>
                             </div>
                           </div>
                         </div>
@@ -205,7 +204,7 @@ const CommunityDetail = () => {
                           <div className="article-action">
                             <div className="article-action__item">
                               <button
-                                onClick={deletePost(resp.data.boardId)}
+                                onClick={()=>deletePost(resp.data.boardId)}
                                 className="article-action__button button button--red button--red--border"
                               >
                                 삭제
@@ -320,48 +319,51 @@ const CommunityDetail = () => {
                             <p>{item.replyContent}</p>
                           </div>{" "}
                           {sessionStorage.getItem("email") === item.replyUserEmail && (
-                            <div
-                              className="deleteReplyBtn"
-                              style={{ color: "red", cursor: "pointer", fontSize: "14px" , width : "28px" }}
-                              onClick={() => {
-                                const swalWithBootstrapButtons = Swal.mixin({
-                                  customClass: {
-                                    confirmButton: 'btn btn-success',
-                                    cancelButton: 'btn btn-danger'
-                                  },
-                                  buttonsStyling: false
-                                })
-                                
-                                swalWithBootstrapButtons.fire({
-                                  title: '알림',
-                                  text: "작성한 댓글을 삭제 하시겠습니까?",
-                                  icon: 'warning',
-                                  showCancelButton: true,
-                                  confirmButtonText: '네',
-                                  cancelButtonText: '취소',
-                                  reverseButtons: true
-                                }).then((result) => {
-                                  if (result.isConfirmed) {
-                                    swalWithBootstrapButtons.fire(
-                                      '알림',
-                                      '삭제 처리 되었습니다.',
-                                      'success'
-                                    )
-                                    deleteReply(item.replyId);
-                                  } else if (
-                                    result.dismiss === Swal.DismissReason.cancel
-                                  ) {
-                                    swalWithBootstrapButtons.fire(
-                                      '알림',
-                                      '취소 처리 되었습니다.',
-                                      'error'
-                                    )
-                                  }
-                                })
-                              }}
-                            >
-                              삭제
-                            </div>
+                            <>
+                              <div
+                                  className="deleteReplyBtn"
+                                  style={{ color: "red", cursor: "pointer", fontSize: "14px" , width : "28px" }}
+                                  onClick={() => {
+                                    const swalWithBootstrapButtons = Swal.mixin({
+                                      customClass: {
+                                        confirmButton: 'btn btn-success',
+                                        cancelButton: 'btn btn-danger'
+                                      },
+                                      buttonsStyling: false
+                                    })
+                                    
+                                    swalWithBootstrapButtons.fire({
+                                      title: '알림',
+                                      text: "작성한 댓글을 삭제 하시겠습니까?",
+                                      icon: 'warning',
+                                      showCancelButton: true,
+                                      confirmButtonText: '네',
+                                      cancelButtonText: '취소',
+                                      reverseButtons: true
+                                    }).then((result) => {
+                                      if (result.isConfirmed) {
+                                        swalWithBootstrapButtons.fire(
+                                          '알림',
+                                          '삭제 처리 되었습니다.',
+                                          'success'
+                                        )
+                                        deleteReply(item.replyId);
+                                      } else if (
+                                        result.dismiss === Swal.DismissReason.cancel
+                                      ) {
+                                        swalWithBootstrapButtons.fire(
+                                          '알림',
+                                          '취소 처리 되었습니다.',
+                                          'error'
+                                        )
+                                      }
+                                    })
+                                  }}
+                                >
+                                  삭제
+                                </div>
+                            </>
+                            
                           )}
                         </div>
                       )) : <></>}    

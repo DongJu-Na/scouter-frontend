@@ -7,6 +7,9 @@ import Login from "./pages/Login";
 import Ranking from "./pages/Ranking";
 import Community from "./pages/Community";
 import CommunityDetail from "./pages/CommunityDetail";
+import CommunityWrite from "./pages/CommunityWrite";
+import CommunityEdit from "./pages/CommunityEdit";
+import PrivateRoute from "./components/PrivateRoute";
 
 function App() {
 
@@ -18,6 +21,9 @@ function App() {
             <Route exact path="/ranking" element={<Ranking/>} />
             <Route exact path="/community" element={<Community/>} />
             <Route exact path="/community/:id" element={<CommunityDetail/>} />
+            <Route exact path="/communityWrite" element={<PrivateRoute component={<CommunityWrite/>}/>}/>
+            <Route exact path="/communityEdit" element={<PrivateRoute  component={<CommunityEdit/>}/>}/>
+            
         </Routes>
   );
 }
