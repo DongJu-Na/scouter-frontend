@@ -1,13 +1,37 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { useRecoilValue } from "recoil";
 import { summonerDataState} from "../atom";
 
 
-function QuickLook(){
+function QuickLook({refreshGame}){
 
     const summonerData = useRecoilValue(summonerDataState);
+    const [timer,setTimer] = useState(0);
+    const [active,setActive] = useState(false);
 
+    useEffect(() => {
+        let timerF;
+        if (active) {
+            timerF = setInterval(() => {
+                setTimer((t)=>t-1);
+          }, 1000);
+
+          if(timer === 0){
+            setActive(false);
+          }
+        }
+        return () => clearInterval(timerF)
+      }, [active]);
+
+    function refreshGameCheck(){
+        if(!active){
+            setActive(true);
+            setTimer(120);
+            refreshGame();
+        }
+    }
+    
     return(
         <div className="QuickLook">
             {/* 
@@ -30,9 +54,15 @@ function QuickLook(){
             
                     <div className="UserNameAndRaderInfo">
                         <div className="UserName"> <b>{summonerData.name}</b></div>
-                        {/*<span className="LadderRank">래더 랭킹<span className="Accent"> 162,782 위 </span> (상위 3.62%) </span>  */}
+                        <div className="resetMatchBtn">
+                            <button onClick={()=>refreshGameCheck()} disabled={!active ? false : true}>전적 갱신</button>
+                        </div>
+                        {timer !== 0 ? <span className="Accent">{timer}초 후 갱신을 시도해주세요.</span> : <></>}
                     </div>
+                    
+                    
             </div>
+            
       </div>
     )
 }

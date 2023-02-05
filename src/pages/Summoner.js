@@ -19,9 +19,9 @@ function Summoner() {
     const summonerData = useRecoilValue(summonerDataState);
     const [leaugeData,setLeaugeData] = useRecoilState(summonerLeagueDataState);
     const [match,setMatch] = useRecoilState(matchDataState);
-
+    const [,setGameCnt] = useState(0);
+    const [refreshFlag,setRefreshFlag] = useState(false);
     const [gameType , setGameType] = useState('Total');
-    const [gameCnt , setGameCnt] = useState(0);
 
     useEffect(()=>{
         console.log("useEffect", summonerData);
@@ -31,6 +31,14 @@ function Summoner() {
             getMatchesInfo(summonerData.puuid);
         }
     },[summonerData]);
+
+    useEffect(()=>{
+        if(refreshFlag){
+            setGameCnt(0);
+            getMatchesInfo(summonerData.puuid);
+            setRefreshFlag(false);
+        }
+    },[refreshFlag])
 
     const getLeagueInfo = (query) => {
         if(query === "") return false;
@@ -69,11 +77,15 @@ function Summoner() {
 
     }
 
+    function refreshGame (){
+        setRefreshFlag(true);
+    }
+
     return (
                 <div className="Summoner">
                 <Header />
                 <SearchBar />
-                <QuickLook />
+                <QuickLook refreshGame={refreshGame}/>
                 <main className="SummonerBody">
                 <div className="SideContent">
                     {

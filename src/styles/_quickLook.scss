@@ -82,12 +82,38 @@
         font-family: "AppleSDGothicNeo-Regular";
         font-size: 11px;
         color: #657070;
-
-        .Accent {
-          font-weight: bold;
-          color: #059ede;
-        }
       }
+    }
+    .resetMatchBtn{
+      display: flex;
+      margin-top: 8px;
+      button{
+        padding: 0px 14px;
+        border-radius: 4px;
+        font-size: 14px;
+        margin-right: 8px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #6c757d;
+        border: 0;
+        color: white;
+        font-weight: bold;
+      }
+      button:disabled {
+        background: #a09a9a;
+        color: black;
+      }
+    }
+
+    .Accent {
+      margin-top: 8px;
+      font-size: 12px;
+      color: #9AA4AF;
+      width: -webkit-max-content;
+      width: -moz-max-content;
+      width: max-content;
     }
   }
 }
