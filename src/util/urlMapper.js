@@ -30,7 +30,8 @@ export const httpUrl = {
     getMatchId : "/api/lol/getMatchId/", // 경기ID 조회
     getMatchDetail : "/api/lol/getMatchDetail/", // 경기상세정보 조회
     getMatchTimeLine : "/api/lol/getMatchTimeLine/", // 경기타임라인 조회
-    getMatchesInfo : "/api/lol/getMatchesInfo/", // 최근20경기조회
+    getMatchesInfo : "/api/lol/getMatchesInfo/", // 최근10경기조회
+    getRankingInfo : "/api/lol/getRankingInfo",
 
     /* Riot proxy Test Api */
     t1 : "/kr/lol/summoner/v4/summoners/by-name/",

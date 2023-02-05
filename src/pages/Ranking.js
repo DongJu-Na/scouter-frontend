@@ -3,6 +3,9 @@ import { Link, useNavigate } from "react-router-dom";
 import Headers from "../components/Header";
 import Footer from "../components/Footer";
 
+import { httpGet } from "../util/apiClient";
+import { httpUrl } from "../util/urlMapper";
+
 const Ranking = () => {
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
@@ -10,7 +13,7 @@ const Ranking = () => {
   const [postPage, setPostPage] = useState(1);
 
   useEffect(() => {
-
+    getRankingInfo();
   }, []);
 
   const handleOnChange = (e) => {
@@ -36,7 +39,15 @@ const Ranking = () => {
     let nextPage = postPage + 1;
   };
 
-  let a = 300;
+  const getRankingInfo = () =>{
+    httpGet(httpUrl.getRankingInfo, {})
+    .then((res) => {
+        console.log(res);
+    })
+    .catch((e) => { 
+      console.error(e);       
+    });
+  }
 
   return (
     <div className="ranking">
