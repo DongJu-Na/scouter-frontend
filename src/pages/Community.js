@@ -72,7 +72,7 @@ const Community = () => {
                 <div style={{ marginRight: "24px" }}>
                   {sessionStorage.getItem("accessToken") !== null &&
                     sessionStorage.getItem("accessToken") !== undefined && (
-                      <Link to="/write">
+                      <Link to={"/communityEdit"}  state={{type : "write"}} >
                         <img
                           src="img/iconWrite.png"
                           style={{ width: "24px" }}

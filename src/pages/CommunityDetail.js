@@ -7,6 +7,9 @@ import { httpGet , httpPost , httpDelete , httpPut } from "../util/apiClient";
 import { httpUrl } from "../util/urlMapper";
 import Swal from "sweetalert2";
 
+import { Viewer  } from '@toast-ui/react-editor';
+import '@toast-ui/editor/dist/toastui-editor.css';
+
 const CommunityDetail = () => {
   const navigate = useNavigate();
   const [replies, setReplies] = useState([]);
@@ -212,14 +215,13 @@ const CommunityDetail = () => {
                             </div>
                             <div className="article-action__item">
                               <Link
-                                to={{
-                                  pathname: "/edit",
-                                  state: {
-                                    postId: resp.data.boardId,
+                                to={"/communityEdit"}
+                                state={{
+                                    type : "edit",
+                                    boardId: resp.data.boardId,
                                     title: resp.data.boardTitle,
                                     content:resp.data.boardContent,
-                                  },
-                                }}
+                                  }}
                                 className="article-action__button__button"
                               >
                                 수정
@@ -230,7 +232,7 @@ const CommunityDetail = () => {
                       </div>
                       <div className="article-content-wrap">
                         <div className="article-content">
-                          <p>{resp.data.boardContent}</p>
+                          <Viewer initialValue={resp.data.boardContent||''} ></Viewer>
                         </div>
                       </div>
                       

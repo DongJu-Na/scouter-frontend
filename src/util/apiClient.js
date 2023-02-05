@@ -61,6 +61,7 @@ const httpExec = (method, url, data) => {
          // }, 1000);
       })
       .catch((error) => {
+        console.log(error);
         if (error.message.includes("401")) {
             // 세션 만료 시 로직 
             //alert("로그인이 만료되었습니다. 다시 로그인해주세요");
