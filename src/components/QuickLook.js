@@ -24,6 +24,11 @@ function QuickLook({refreshGame}){
         return () => clearInterval(timerF)
       }, [active]);
 
+      useEffect(()=>{
+        setActive(false);
+        setTimer(0);
+      },[summonerData]);
+
     function refreshGameCheck(){
         if(!active){
             setActive(true);
