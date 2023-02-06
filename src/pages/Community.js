@@ -202,7 +202,7 @@ const Community = () => {
                       </div>
                     )}
 
-                    {statusCode !== 204 ? (
+                    {!board.last ? (
                       <div style={{ display: "inline-block" }}>
                         <button
                           style={{ marginLeft: "6px" }}
