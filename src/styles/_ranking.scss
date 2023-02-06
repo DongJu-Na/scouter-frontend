@@ -1,6 +1,6 @@
 .ranking{
   height: 100%;
-  width: 100vw;
+  width: 100%;
   background-color: rgb(4 0 0);
   display: flex;
   flex-direction: column;
@@ -66,7 +66,7 @@
 
   .text {
     float: left;
-    color: #4a4a4a;
+    color: white;
     font-size: 14px;
   }
   .small {
