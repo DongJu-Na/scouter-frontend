@@ -19,9 +19,10 @@ function QuickLook({refreshGame}){
 
           if(timer === 0){
             setActive(false);
+            clearInterval(timerF);
           }
         }
-        return () => clearInterval(timerF)
+        return () => clearInterval(timerF);
       }, [active]);
 
       useEffect(()=>{
