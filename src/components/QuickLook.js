@@ -52,7 +52,7 @@ function QuickLook({refreshGame}){
 
 
             <div className="QuickLookBottomContainer">
-                    <img className="Avatar" src={`https://ddragon.leagueoflegends.com/cdn/13.1.1/img/profileicon/${summonerData.profileIconId}.png`} alt="avatar" />
+                    <img className="Avatar" src={`http://ddragon.leagueoflegends.com/cdn/13.1.1/img/profileicon/${summonerData.profileIconId}.png`} alt="avatar" />
                 
                     <div className="Champlevel">
                         <span>{summonerData.summonerLevel}</span>

@@ -214,7 +214,7 @@ const GameRecord = ({matchData,myInfoData}) => {
             <div className="ItemWrapper">
             <img
               className="Item"
-              src={`https://ddragon.leagueoflegends.com/cdn/13.1.1/img/item/${_code}.png`}
+              src={`http://ddragon.leagueoflegends.com/cdn/13.1.1/img/item/${_code}.png`}
               alt=""
               data-tip
               data-for={`item${_num}${matchData.info.gameId}${matchData.metadata.matchId}`}
@@ -350,8 +350,8 @@ const GameRecord = ({matchData,myInfoData}) => {
             <img className="Spell" src={`http://ddragon.leagueoflegends.com/cdn/13.1.1/img/spell/${spellInfo(myInfoData.summoner2Id)}.png`} alt="Spell" />
           </div>
           <div className="Runes">
-            <img className="Rune" src={`https://ddragon.leagueoflegends.com/cdn/img/${runeInfo(myInfoData.perks.styles[0].style,myInfoData.perks.styles[0].selections[0].perk,"main")}`} alt="Rune" />
-            <img className="Rune" src={`https://ddragon.leagueoflegends.com/cdn/img/${runeInfo(myInfoData.perks.styles[1].style,myInfoData.perks.styles[1].selections[0].perk,"sub")}`} alt="Rune" />
+            <img className="Rune" src={`http://ddragon.leagueoflegends.com/cdn/img/${runeInfo(myInfoData.perks.styles[0].style,myInfoData.perks.styles[0].selections[0].perk,"main")}`} alt="Rune" />
+            <img className="Rune" src={`http://ddragon.leagueoflegends.com/cdn/img/${runeInfo(myInfoData.perks.styles[1].style,myInfoData.perks.styles[1].selections[0].perk,"sub")}`} alt="Rune" />
           </div>
         </div>
         <div className="ChampName">{ champInfo(myInfoData.championName).name }</div>

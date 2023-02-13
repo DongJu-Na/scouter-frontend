@@ -24,7 +24,7 @@ const ProfileIcon = ({data}) => {
     return(
       <>
         <img
-          src={`https://ddragon.leagueoflegends.com/cdn/13.1.1/img/profileicon/${pi}.png`}
+          src={`http://ddragon.leagueoflegends.com/cdn/13.1.1/img/profileicon/${pi}.png`}
           alt=""
         />
       </>
