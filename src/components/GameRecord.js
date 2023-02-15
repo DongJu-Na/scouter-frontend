@@ -244,6 +244,7 @@ const GameRecord = ({matchData,myInfoData}) => {
   }
 
   const champInfo = (_code) => {
+    _code = ("FiddleSticks" ? "Fiddlesticks" : _code)
     let returnVal = champ.data[_code];
     return returnVal;
   }
