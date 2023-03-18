@@ -244,7 +244,7 @@ const GameRecord = ({matchData,myInfoData}) => {
   }
 
   const champInfo = (_code) => {
-    _code = ("FiddleSticks" ? "Fiddlesticks" : _code)
+    _code = (_code === "FiddleSticks" ? "Fiddlesticks" : _code)
     let returnVal = champ.data[_code];
     return returnVal;
   }
@@ -325,9 +325,6 @@ const GameRecord = ({matchData,myInfoData}) => {
     }
   }
 
-
-  
-
   return (
     <div className={`GameRecord ${vd.code}`}>
       <div className="GR1">
@@ -343,7 +340,8 @@ const GameRecord = ({matchData,myInfoData}) => {
         <div className="ChampVisuals">
           <img
             className="ChampAvatar"
-            src={`http://ddragon.leagueoflegends.com/cdn/13.1.1/img/champion/${myInfoData.championName}.png`}
+            
+            src={`http://ddragon.leagueoflegends.com/cdn/13.1.1/img/champion/${(myInfoData.championName === "FiddleSticks" ? "Fiddlesticks" : myInfoData.championName)}.png`}
             alt="ChampAvatar"
           />
           <div className="Spells">
